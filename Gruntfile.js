@@ -4,18 +4,18 @@ module.exports = function (grunt) {
 
     var params = {
         files: [
-            'js/namespace.js',
-            'js/utils/IrregularNumber.js',
-            'js/utils/MultiArray.js',
-            'js/RowSignature.js',
-            'js/Index.js',
-            'js/IndexCollection.js',
-            'js/Table.js',
-            'js/exports.js'
+            'src/namespace.js',
+            'src/utils/IrregularNumber.js',
+            'src/utils/MultiArray.js',
+            'src/RowSignature.js',
+            'src/Index.js',
+            'src/IndexCollection.js',
+            'src/Table.js',
+            'src/exports.js'
         ],
 
         test: [
-            'js/jsTestDriver.conf'
+            'src/jsTestDriver.conf'
         ],
 
         globals: {}
