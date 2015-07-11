@@ -1,7 +1,7 @@
 /**
  * Library exports
  */
-/*global jorder, module */
+/*global giant, module */
 if (typeof module === 'object') {
-    module.exports = jorder;
+    module.exports = giant;
 }

@@ -1,2 +1,2 @@
-/*global troop */
-troop.testing = true;
+/*global giant */
+giant.testing = true;

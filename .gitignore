@@ -1,6 +1,6 @@
+/*.tgz
 /.idea/
+/doc/
+/giant-table.js
 /node_modules/
 /out/
-/jorder.js
-/doc/
-/*.tgz

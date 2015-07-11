@@ -1,5 +1,5 @@
 /*global module, test, expect, ok, raises, equal, strictEqual, deepEqual */
-/*global sntls, jorder */
+/*global giant, giant */
 (function () {
     "use strict";
 
@@ -9,39 +9,39 @@
         expect(2);
 
         var myRow = {},
-            index = jorder.Index.create(['foo', 'bar']);
+            index = giant.Index.create(['foo', 'bar']);
 
-        jorder.RowSignature.addMocks({
+        giant.RowSignature.addMocks({
             containedByRow: function (row) {
                 strictEqual(row, myRow, "Row passed");
                 strictEqual(this, index.rowSignature, "Index matches");
             }
         });
 
-        jorder.IndexCollection._isIndexContainedByRow(myRow, index);
+        giant.IndexCollection._isIndexContainedByRow(myRow, index);
 
-        jorder.RowSignature.removeMocks();
+        giant.RowSignature.removeMocks();
     });
 
     test("Field count mapper", function () {
-        var index = jorder.Index.create(['foo', 'bar']);
+        var index = giant.Index.create(['foo', 'bar']);
 
         equal(
-            jorder.IndexCollection._indexFieldCountMapper(index),
+            giant.IndexCollection._indexFieldCountMapper(index),
             index.rowSignature.fieldNames.length,
             "Index signature field count"
         );
     });
 
     test("DESC Numeric comparator", function () {
-        equal(jorder.IndexCollection._descNumericComparator(1, 2), 1, "First is lower");
-        equal(jorder.IndexCollection._descNumericComparator(3, 2), -1, "First is higher");
-        equal(jorder.IndexCollection._descNumericComparator(3, 3), 0, "Equal");
+        equal(giant.IndexCollection._descNumericComparator(1, 2), 1, "First is lower");
+        equal(giant.IndexCollection._descNumericComparator(3, 2), -1, "First is higher");
+        equal(giant.IndexCollection._descNumericComparator(3, 3), 0, "Equal");
     });
 
     test("Index addition", function () {
-        var index = jorder.Index.create(['foo', 'bar']),
-            indexCollection = jorder.IndexCollection.create();
+        var index = giant.Index.create(['foo', 'bar']),
+            indexCollection = giant.IndexCollection.create();
 
         indexCollection.setItem(index);
 
@@ -55,9 +55,9 @@
     });
 
     test("Exact index lookup by field names", function () {
-        var index1 = jorder.Index.create(['foo', 'bar']),
-            index2 = jorder.Index.create(['field1', 'field2']),
-            indexCollection = jorder.IndexCollection.create();
+        var index1 = giant.Index.create(['foo', 'bar']),
+            index2 = giant.Index.create(['field1', 'field2']),
+            indexCollection = giant.IndexCollection.create();
 
         indexCollection
             .setItem(index1)
@@ -73,17 +73,17 @@
     });
 
     test("Fetching indexes matching a row", function () {
-        var indexCollection = jorder.IndexCollection.create()
-                .setItem(jorder.Index.create(['foo', 'bar']))
-                .setItem(jorder.Index.create(['foo']))
-                .setItem(jorder.Index.create(['foo', 'baz']))
-                .setItem(jorder.Index.create(['foo', 'moo'])),
+        var indexCollection = giant.IndexCollection.create()
+                .setItem(giant.Index.create(['foo', 'bar']))
+                .setItem(giant.Index.create(['foo']))
+                .setItem(giant.Index.create(['foo', 'baz']))
+                .setItem(giant.Index.create(['foo', 'moo'])),
             result;
 
         // full match (ie. all index fields are present in row)
         result = indexCollection.getIndexesForRow({foo: 'hello', bar: 'world'});
 
-        ok(result.isA(jorder.IndexCollection), "Return type IndexCollection");
+        ok(result.isA(giant.IndexCollection), "Return type IndexCollection");
         deepEqual(
             result.getKeys().sort(),
             ['foo%string%ascending', 'foo|bar%string%ascending'],
@@ -92,17 +92,17 @@
     });
 
     test("Fetching index for row", function () {
-        var indexCollection = jorder.IndexCollection.create()
-                .setItem(jorder.Index.create(['foo', 'bar']))
-                .setItem(jorder.Index.create(['foo']))
-                .setItem(jorder.Index.create(['foo', 'baz']))
-                .setItem(jorder.Index.create(['foo', 'moo'])),
+        var indexCollection = giant.IndexCollection.create()
+                .setItem(giant.Index.create(['foo', 'bar']))
+                .setItem(giant.Index.create(['foo']))
+                .setItem(giant.Index.create(['foo', 'baz']))
+                .setItem(giant.Index.create(['foo', 'moo'])),
             result;
 
         // could yield any of the first 3 indexes
         result = indexCollection.getIndexForRow({foo: 'hello', bar: 'world', baz: '!!!'});
 
-        ok(result.isA(jorder.Index), "Return type Index");
+        ok(result.isA(giant.Index), "Return type Index");
         ok(
             result.rowSignature.fieldSignature === 'foo|bar%string' ||
             result.rowSignature.fieldSignature === 'foo%string' ||
@@ -112,10 +112,10 @@
     });
 
     test("Fetching best index for row", function () {
-        var indexCollection = jorder.IndexCollection.create()
-                .setItem(jorder.Index.create(['foo', 'bar']))
-                .setItem(jorder.Index.create(['foo']))
-                .setItem(jorder.Index.create(['foo', 'bar', 'baz'])),
+        var indexCollection = giant.IndexCollection.create()
+                .setItem(giant.Index.create(['foo', 'bar']))
+                .setItem(giant.Index.create(['foo']))
+                .setItem(giant.Index.create(['foo', 'bar', 'baz'])),
             result;
 
         result = indexCollection.getBestIndexForRow({hello: 'world'});
@@ -125,7 +125,7 @@
         // yields the one with the most matching fields
         result = indexCollection.getBestIndexForRow({foo: 'hello', bar: 'world', baz: '!!!'});
 
-        ok(result.isA(jorder.Index), "Return type");
+        ok(result.isA(giant.Index), "Return type");
         equal(result.rowSignature.fieldSignature, 'foo|bar|baz%string', "Result index signature");
 
         result = indexCollection.getBestIndexForRow({foo: 'hello', bar: 'world'});
@@ -135,7 +135,7 @@
     test("Fetching best index for multiple fields", function () {
         expect(2);
 
-        var indexCollection = jorder.IndexCollection.create(),
+        var indexCollection = giant.IndexCollection.create(),
             bestIndex = {};
 
         indexCollection.addMocks({
@@ -152,9 +152,9 @@
     });
 
     test("Row addition", function () {
-        var index1 = jorder.Index.create(['foo', 'bar']),
-            index2 = jorder.Index.create(['foo', 'moo']),
-            indexCollection = jorder.IndexCollection.create()
+        var index1 = giant.Index.create(['foo', 'bar']),
+            index2 = giant.Index.create(['foo', 'moo']),
+            indexCollection = giant.IndexCollection.create()
                 .setItem(index1)
                 .setItem(index2);
 

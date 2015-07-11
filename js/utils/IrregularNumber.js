@@ -1,23 +1,23 @@
-/*global dessert, troop, sntls, jorder */
-troop.postpone(jorder, 'IrregularNumber', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'IrregularNumber', function () {
     "use strict";
 
     /**
      * Instantiates class.
-     * @name jorder.IrregularNumber.create
+     * @name giant.IrregularNumber.create
      * @function
      * @param {number[]} radices
-     * @return {jorder.IrregularNumber}
+     * @return {giant.IrregularNumber}
      */
 
     /**
      * Irregular Number. Number represented in an irregular number system, where each digit
      * might have a different radix.
-     * @class jorder.IrregularNumber
-     * @extends troop.Base
+     * @class giant.IrregularNumber
+     * @extends giant.Base
      */
-    jorder.IrregularNumber = troop.Base.extend()
-        .addPrivateMethods(/** @lends jorder.IrregularNumber */{
+    giant.IrregularNumber = giant.Base.extend()
+        .addPrivateMethods(/** @lends giant.IrregularNumber */{
             /**
              * Calculates the maximum value possible in this number system
              * @return {Number}
@@ -91,13 +91,13 @@ troop.postpone(jorder, 'IrregularNumber', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends jorder.IrregularNumber# */{
+        .addMethods(/** @lends giant.IrregularNumber# */{
             /**
              * @param {number[]} radices Array of custom radices for each item.
              * @ignore
              */
             init: function (radices) {
-                dessert.isArray(radices, "Invalid radices");
+                giant.isArray(radices, "Invalid radices");
 
                 /**
                  * Radix for each digit
@@ -134,10 +134,10 @@ troop.postpone(jorder, 'IrregularNumber', function () {
             /**
              * Sets scalar value on irregular number
              * @param {number} value
-             * @return {jorder.IrregularNumber}
+             * @return {giant.IrregularNumber}
              */
             setScalar: function (value) {
-                dessert.assert(value <= this.maxValue, "Value out of bounds");
+                giant.assert(value <= this.maxValue, "Value out of bounds");
 
                 // assigning scalar value
                 this.asScalar = value;
@@ -151,14 +151,14 @@ troop.postpone(jorder, 'IrregularNumber', function () {
             /**
              * Sets irregular number digits
              * @param {number[]} digits
-             * @return {jorder.IrregularNumber}
+             * @return {giant.IrregularNumber}
              */
             setDigits: function (digits) {
                 var radices = this.radices,
                     asDigits,
                     i, j;
 
-                dessert
+                giant
                     .isArray(digits, "Invalid digits")
                     .assert(digits.length <= radices.length, "Too many digits");
 
@@ -176,7 +176,7 @@ troop.postpone(jorder, 'IrregularNumber', function () {
 
             /**
              * Increments current value
-             * @return {jorder.IrregularNumber}
+             * @return {giant.IrregularNumber}
              */
             inc: function () {
                 var digits = this.asDigits,

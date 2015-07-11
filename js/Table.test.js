@@ -1,5 +1,5 @@
 /*global module, test, expect, ok, raises, equal, strictEqual, notStrictEqual, deepEqual */
-/*global sntls, jorder */
+/*global giant, giant */
 (function () {
     "use strict";
 
@@ -35,20 +35,20 @@
     }
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create([
+        var hash = giant.Hash.create([
                 {foo: 'bar', hello: 'world'}
             ]),
             table = hash.toTable();
 
-        ok(table.isA(jorder.Table), "Hash converted to table");
+        ok(table.isA(giant.Table), "Hash converted to table");
     });
 
     test("Instantiation", function () {
         raises(function () {
-            jorder.Table.create({foo: 'bar'});
+            giant.Table.create({foo: 'bar'});
         }, "Invalid buffer");
 
-        var table = jorder.Table.create([
+        var table = giant.Table.create([
             {foo: 'bar', hello: 'world'}
         ]);
 
@@ -60,12 +60,12 @@
             "Table rows"
         );
 
-        ok(table.indexCollection.isA(jorder.IndexCollection), "Index collection");
+        ok(table.indexCollection.isA(giant.IndexCollection), "Index collection");
         equal(table.indexCollection.getKeyCount(), 0, "No indexes initially");
     });
 
     test("Item setting", function () {
-        var table = jorder.Table.create()
+        var table = giant.Table.create()
             .addIndex(['foo'])
             .setItem('0', {foo: "hello"});
 
@@ -84,7 +84,7 @@
     });
 
     test("Setting multiple items", function () {
-        var table = jorder.Table.create()
+        var table = giant.Table.create()
             .addIndex(['foo'])
             .setItem('0', {foo: "hello"});
 
@@ -110,7 +110,7 @@
     });
 
     test("Item deletion", function () {
-        var table = jorder.Table.create(
+        var table = giant.Table.create(
                 [
                     {foo: "hello"},
                     {foo: "world"}
@@ -134,7 +134,7 @@
     });
 
     test("Cloning", function () {
-        var table = jorder.Table.create(
+        var table = giant.Table.create(
                     [
                         {foo: "hello"},
                         {foo: "world"}
@@ -169,7 +169,7 @@
     });
 
     test("Table merge", function () {
-        var table = jorder.Table.create(
+        var table = giant.Table.create(
                     [
                         {foo: "hello"},
                         {foo: "world"}
@@ -177,7 +177,7 @@
                 .addIndex(['foo']),
             result;
 
-        result = /** @type jorder.Table */ table.mergeWith(jorder.Table.create([
+        result = /** @type giant.Table */ table.mergeWith(giant.Table.create([
             undefined,
             {foo: "howdy"},
             {foo: "yall"}
@@ -213,7 +213,7 @@
     });
 
     test("Index addition", function () {
-        var table = jorder.Table.create([
+        var table = giant.Table.create([
             {foo: 'hello', bar: 'world'}
         ]);
 
@@ -225,7 +225,7 @@
 
         var index = table.indexCollection.getIndexForFields(['foo', 'bar'], 'string', 'descending');
 
-        ok(index.isA(jorder.Index), "Index instance");
+        ok(index.isA(giant.Index), "Index instance");
         equal(index.rowSignature.isCaseInsensitive, false, "Case sensitive by default");
         deepEqual(
             index.rowIdLookup.items,
@@ -242,7 +242,7 @@
     });
 
     test("Re-indexing", function () {
-        var table = jorder.Table.create([
+        var table = giant.Table.create([
             {foo: 'hello', bar: 'world'}
         ]);
 
@@ -289,7 +289,7 @@
     });
 
     test("Querying by row IDs", function () {
-        var table = jorder.Table.create(json);
+        var table = giant.Table.create(json);
 
         deepEqual(table.queryByRowIds([2]), [json[2]], "Single row match");
         deepEqual(table.queryByRowIds([0, 2]), [json[0], json[2]], "Multiple row match");
@@ -298,8 +298,8 @@
     });
 
     test("Query by single row", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string)
                 .addIndex(['volumes'], SIGNATURE_TYPES.number);
@@ -334,8 +334,8 @@
     });
 
     test("Query by multiple rows", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string)
                 .addIndex(['volumes'], SIGNATURE_TYPES.number);
@@ -371,26 +371,26 @@
     });
 
     test("Querying by offset", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.string),
             result;
 
         result = table.queryByOffsetAsHash(['title'], 1);
 
-        ok(result.isA(sntls.Hash), "should return Hash instance");
+        ok(result.isA(giant.Hash), "should return Hash instance");
         strictEqual(result.getFirstValue(), json[2], "should return table row at specified offset");
     });
 
     test("Hash-less querying by offset", function () {
-        var table = jorder.Table.create(json),
+        var table = giant.Table.create(json),
             hashBuffer = {};
 
         table.addMocks({
             queryByOffsetAsHash: function (fieldName, offset) {
                 equal(fieldName, 'foo', "should pass field name to hash getter");
                 equal(offset, 100, "should pass offset to hash getter");
-                return sntls.Hash.create(hashBuffer);
+                return giant.Hash.create(hashBuffer);
             }
         });
 
@@ -398,14 +398,14 @@
     });
 
     test("Querying by offset range", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.string),
             result;
 
         result = table.queryByOffsetRangeAsHash(['title'], 1, 3);
 
-        ok(result.isA(sntls.Hash), "should return Hash instance");
+        ok(result.isA(giant.Hash), "should return Hash instance");
         deepEqual(
             result.items,
             [ json[2], json[1] ],
@@ -413,7 +413,7 @@
     });
 
     test("Hash-less querying by offset range", function () {
-        var table = jorder.Table.create(json),
+        var table = giant.Table.create(json),
             hashBuffer = {};
 
         table.addMocks({
@@ -421,7 +421,7 @@
                 equal(fieldName, 'foo', "should pass field name to hash getter");
                 equal(startOffset, 1, "should pass start offset to hash getter");
                 equal(endOffset, 100, "should pass end offset to hash getter");
-                return sntls.Hash.create(hashBuffer);
+                return giant.Hash.create(hashBuffer);
             }
         });
 
@@ -431,28 +431,28 @@
     test("Query by range (call stack)", function () {
         expect(4);
 
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
-        jorder.Index.addMocks({
+        giant.Index.addMocks({
             getRowIdsForKeyRangeAsHash: function (startValue, endValue, offset, limit) {
                 equal(startValue, "M");
                 equal(endValue, "Z");
                 equal(offset, 1);
                 equal(limit, 2);
-                return sntls.Hash.create();
+                return giant.Hash.create();
             }
         });
 
         table.queryByRangeAsHash(['author'], "M", "Z", 1, 2);
 
-        jorder.Index.removeMocks();
+        giant.Index.removeMocks();
     });
 
     test("Query by range", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
@@ -473,8 +473,8 @@
     });
 
     test("Query by range (case insensitive)", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText, true)
                 .addIndex(['author'], SIGNATURE_TYPES.string, true);
 
@@ -497,27 +497,27 @@
     test("Query by prefix (call stack)", function () {
         expect(3);
 
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
-        jorder.Index.addMocks({
+        giant.Index.addMocks({
             getRowIdsForPrefixAsHash: function (prefix, offset, limit) {
                 equal(prefix, "M");
                 equal(offset, 1);
                 equal(limit, 2);
-                return sntls.Hash.create();
+                return giant.Hash.create();
             }
         });
 
         table.queryByPrefixAsHash(['author'], "M", 1, 2);
 
-        jorder.Index.removeMocks();
+        giant.Index.removeMocks();
     });
 
     test("Query by prefix", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
@@ -541,8 +541,8 @@
     });
 
     test("Query by prefix (case insensitive)", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(json)
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText, true)
                 .addIndex(['author'], SIGNATURE_TYPES.string, true);
 
@@ -566,7 +566,7 @@
     });
 
     test("Insertion", function () {
-        var table = jorder.Table.create(),
+        var table = giant.Table.create(),
             result;
 
         table
@@ -606,7 +606,7 @@
     });
 
     test("Multiple insertion", function () {
-        var table = jorder.Table.create(),
+        var table = giant.Table.create(),
             result = [];
 
         table.addMocks({
@@ -626,8 +626,8 @@
     });
 
     test("Updating rows matching row expression", function () {
-        var SIGNATURE_TYPES = jorder.RowSignature.SIGNATURE_TYPES,
-            table = jorder.Table.create(sntls.Utils.shallowCopy(json))
+        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
+            table = giant.Table.create(giant.Utils.shallowCopy(json))
                 .addIndex(['volumes'], SIGNATURE_TYPES.number),
             row = {
                 'order'  : 0,
@@ -651,7 +651,7 @@
             table.updateRowsByRow({volumes: 1}, row, 'foo');
         }, "should raise exception on invalid index argument");
 
-        jorder.Index.addMocks({
+        giant.Index.addMocks({
             removeRow: function (row, rowId) {
                 rowsRemoved.push([row, rowId]);
                 return this;
@@ -665,7 +665,7 @@
 
         strictEqual(table.updateRowsByRow({volumes: 1}, row), table, "should be chainable");
 
-        jorder.Index.removeMocks();
+        giant.Index.removeMocks();
 
         deepEqual(table.items, [json[0], row, row],
             "should update all matching rows");
@@ -684,7 +684,7 @@
     test("Deleting rows matching row expression", function () {
         expect(12);
 
-        var table = jorder.Table.create([
+        var table = giant.Table.create([
                     {foo: "hello", bar: "world", baz: "!!!"},
                     {foo: "howdy", bar: "yall", baz: "!"},
                     {foo: "greetings", bar: "everyone", baz: "."}
@@ -707,7 +707,7 @@
             table.deleteRowsByRow({hello: "world"});
         }, "should raise exception when no index fits specified row");
 
-        jorder.Index.addMocks({
+        giant.Index.addMocks({
             removeRow: function (row, rowId) {
                 // will be called 3x (for each index)
                 affectedSignatures.push(this.rowSignature.getKeysForRow(row));
@@ -719,7 +719,7 @@
         strictEqual(table.deleteRowsByRow(rowExpression), table,
             "should be chainable");
 
-        jorder.Index.removeMocks();
+        giant.Index.removeMocks();
 
         deepEqual(
             table.items,
@@ -741,7 +741,7 @@
     test("Clearing table", function () {
         expect(2);
 
-        var table = jorder.Table.create([
+        var table = giant.Table.create([
             {foo: 'bar', hello: 'world'}
         ]);
 

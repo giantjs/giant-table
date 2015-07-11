@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls, jorder */
-troop.postpone(jorder, 'RowSignature', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'RowSignature', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty;
 
     /**
      * Instantiates class.
-     * @name jorder.RowSignature.create
+     * @name giant.RowSignature.create
      * @function
      * @param {string[]} fieldNames Field names
      * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
      * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
-     * @return {jorder.RowSignature}
+     * @return {giant.RowSignature}
      */
 
     /**
      * Row signature. Typed primitive representation of a table row, with validation and generation.
-     * @class jorder.RowSignature
-     * @extends troop.Base
+     * @class giant.RowSignature
+     * @extends giant.Base
      */
-    jorder.RowSignature = troop.Base.extend()
-        .addConstants(/** @lends jorder.RowSignature */{
+    giant.RowSignature = giant.Base.extend()
+        .addConstants(/** @lends giant.RowSignature */{
             /**
              * Field separator, must be escapable w/ encodeURI
              * @type {string}
@@ -62,7 +62,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                 string  : 'string'
             }
         })
-        .addPrivateMethods(/** @lends jorder.RowSignature# */{
+        .addPrivateMethods(/** @lends giant.RowSignature# */{
             /**
              * Creates an array of specified length & filled with
              * the specified value at each position.
@@ -70,7 +70,7 @@ troop.postpone(jorder, 'RowSignature', function () {
              * @param {*} value
              * @return {Array}
              * @private
-             * @memberOf jorder.RowSignature
+             * @memberOf giant.RowSignature
              */
             _createUniformArray: function (length, value) {
                 var result = new Array(length),
@@ -115,7 +115,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends jorder.RowSignature# */{
+        .addMethods(/** @lends giant.RowSignature# */{
             /**
              * @param {string[]} fieldNames Field names
              * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
@@ -123,7 +123,7 @@ troop.postpone(jorder, 'RowSignature', function () {
              * @ignore
              */
             init: function (fieldNames, signatureType, isCaseInsensitive) {
-                dessert
+                giant
                     .isArray(fieldNames, "Invalid field names")
                     .assert(!!fieldNames.length, "Empty field name list")
                     .isStringOptional(signatureType, "Invalid signature type")
@@ -134,7 +134,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                 // conditional assertions
                 if (signatureType) {
                     // validating signature type
-                    dessert.assert(SIGNATURE_TYPES.hasOwnProperty(signatureType), "Invalid signature type");
+                    giant.assert(SIGNATURE_TYPES.hasOwnProperty(signatureType), "Invalid signature type");
                 }
 
                 /**
@@ -146,7 +146,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                  * Lookup object for field names
                  * @type {object}
                  */
-                this.fieldNameLookup = sntls.StringDictionary
+                this.fieldNameLookup = giant.StringDictionary
                     .create({
                         1: fieldNames
                     })
@@ -198,11 +198,11 @@ troop.postpone(jorder, 'RowSignature', function () {
                             return row[fieldNames[0]];
                         } else {
                             radices = this._createUniformArray(fieldNames.length, this.FIELD_SEPARATOR_NUMBER);
-                            digits = sntls.Collection.create(row)
+                            digits = giant.Collection.create(row)
                                 .filterByKeys(fieldNames)
                                 .getValues();
 
-                            return jorder.IrregularNumber.create(radices)
+                            return giant.IrregularNumber.create(radices)
                                 .setDigits(digits)
                                 .asScalar;
                         }
@@ -213,7 +213,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                         if (fieldNames.length === 1) {
                             return this._uriEncoder(row[fieldNames[0]]);
                         } else {
-                            return sntls.StringCollection.create(row)
+                            return giant.StringCollection.create(row)
                                 // reducing row to relevant fields
                                 .filterByKeys(fieldNames)
                                 // encoding field values
@@ -225,7 +225,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                         break;
 
                     default:
-                        dessert.assert(false, "Invalid signature type");
+                        giant.assert(false, "Invalid signature type");
                         return ''; // will never be reached
                     }
                 } else {
@@ -257,7 +257,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                         return this._arrayUriEncoder(row[fieldNames[0]]);
                     } else {
                         // calculating all possible signatures for row
-                        return sntls.Collection.create(row)
+                        return giant.Collection.create(row)
                             // reducing row to relevant fields
                             .filterByKeys(fieldNames)
                             // discarding field names in row
@@ -267,7 +267,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                             .getCombinationsAsHash()
                             // joining combinations to make strings
                             .toCollection()
-                            .mapValues(this._arrayUriEncoder, this, sntls.ArrayCollection)
+                            .mapValues(this._arrayUriEncoder, this, giant.ArrayCollection)
                             .join(this.FIELD_SEPARATOR_STRING)
                             .getValues();
                     }
@@ -280,7 +280,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                         return this._arrayUriEncoder(row[fieldNames[0]].split(this.RE_WORD_DELIMITER));
                     } else {
                         // calculating all possible signatures for row
-                        return sntls.StringCollection.create(row)
+                        return giant.StringCollection.create(row)
                             // reducing row to relevant fields
                             .filterByKeys(fieldNames)
                             // splitting all fields into words
@@ -292,7 +292,7 @@ troop.postpone(jorder, 'RowSignature', function () {
                             .getCombinationsAsHash()
                             // joining combinations to make strings
                             .toCollection()
-                            .mapValues(this._arrayUriEncoder, this, sntls.ArrayCollection)
+                            .mapValues(this._arrayUriEncoder, this, giant.ArrayCollection)
                             .join(this.FIELD_SEPARATOR_STRING)
                             .getValues();
                     }

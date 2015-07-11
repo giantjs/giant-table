@@ -1,5 +1,5 @@
 /*global module, test, ok, raises, equal, strictEqual, deepEqual */
-/*global sntls, jorder */
+/*global giant, giant */
 (function () {
     "use strict";
 
@@ -7,7 +7,7 @@
 
     test("Instantiation", function () {
         raises(function () {
-            jorder.MultiArray.create('foo');
+            giant.MultiArray.create('foo');
         }, "Invalid items");
 
         var arr = [
@@ -15,24 +15,24 @@
                 [3],
                 [4, 5]
             ],
-            list = jorder.MultiArray.create(arr);
+            list = giant.MultiArray.create(arr);
 
         strictEqual(list.items, arr, "Item buffer added");
     });
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create([
+        var hash = giant.Hash.create([
                 [1, 2],
                 [3],
                 [4, 5]
             ]),
             multiArray = hash.toMultiArray();
 
-        ok(multiArray.isA(jorder.MultiArray), "Hash converted to prob. array");
+        ok(multiArray.isA(giant.MultiArray), "Hash converted to prob. array");
     });
 
     test("Item length measurement", function () {
-        var list = jorder.MultiArray.create([
+        var list = giant.MultiArray.create([
             [1, 2],
             [3],
             [4, 5]
@@ -42,7 +42,7 @@
     });
 
     test("Selection", function () {
-        var list = jorder.MultiArray.create([
+        var list = giant.MultiArray.create([
             [1, 2],
             [3],
             [4, 5]
@@ -52,7 +52,7 @@
     });
 
     test("Combination", function () {
-        var list = jorder.MultiArray.create([
+        var list = giant.MultiArray.create([
             [1, 2],
             [3],
             [4, 5]

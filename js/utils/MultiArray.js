@@ -1,27 +1,27 @@
-/*global dessert, troop, sntls, jorder */
-troop.postpone(jorder, 'MultiArray', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'MultiArray', function () {
     "use strict";
 
-    var base = sntls.Hash;
+    var base = giant.Hash;
 
     /**
      * Instantiates class.
-     * @name jorder.MultiArray.create
+     * @name giant.MultiArray.create
      * @function
      * @param {Array[]} items Array of arrays
-     * @return {jorder.MultiArray}
+     * @return {giant.MultiArray}
      */
 
     /**
      * An array that for each of its items holds an even distribution
      * of possible values (represented as arrays).
-     * @class jorder.MultiArray
-     * @extends sntls.Hash
+     * @class giant.MultiArray
+     * @extends giant.Hash
      * @example
      * [[1, 2], [3], [4, 5]]
      */
-    jorder.MultiArray = base.extend()
-        .addPrivateMethods(/** @lends jorder.MultiArray */{
+    giant.MultiArray = base.extend()
+        .addPrivateMethods(/** @lends giant.MultiArray */{
             /**
              * Measures the number of possibilities for each item
              * and returns the counts in an array
@@ -40,13 +40,13 @@ troop.postpone(jorder, 'MultiArray', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends jorder.MultiArray# */{
+        .addMethods(/** @lends giant.MultiArray# */{
             /**
              * @param {Array[]} items Array of arrays
              * @ignore
              */
             init: function (items) {
-                dessert.isArray(items, "Invalid items");
+                giant.isArray(items, "Invalid items");
 
                 base.init.apply(this, arguments);
             },
@@ -56,7 +56,7 @@ troop.postpone(jorder, 'MultiArray', function () {
              * @param {number[]} indices Pin-point values for each item to fetch.
              */
             selectCombination: function (indices) {
-                dessert
+                giant
                     .isArray(indices, "Invalid indices")
                     .assert(this.items.length === indices.length, "Indices length doesn't match list length");
 
@@ -80,7 +80,7 @@ troop.postpone(jorder, 'MultiArray', function () {
                     itemLengths = this._getItemLengths(),
                     itemPosition;
 
-                for (itemPosition = jorder.IrregularNumber.create(itemLengths);
+                for (itemPosition = giant.IrregularNumber.create(itemLengths);
                      itemPosition.asScalar <= itemPosition.maxValue;
                      itemPosition.inc()
                     ) {
@@ -92,23 +92,23 @@ troop.postpone(jorder, 'MultiArray', function () {
 
             /**
              * Retrieves all combinations wrapped in a hash object
-             * @return {sntls.Hash}
+             * @return {giant.Hash}
              */
             getCombinationsAsHash: function () {
-                return sntls.Hash.create(this.getCombinations());
+                return giant.Hash.create(this.getCombinations());
             }
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash */{
+    giant.Hash.addMethods(/** @lends giant.Hash */{
         /**
-         * @return {jorder.MultiArray}
+         * @return {giant.MultiArray}
          */
         toMultiArray: function () {
-            return jorder.MultiArray.create(this.items);
+            return giant.MultiArray.create(this.items);
         }
     });
 });

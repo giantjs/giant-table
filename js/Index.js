@@ -1,28 +1,28 @@
-/*global dessert, troop, sntls, jorder */
-troop.postpone(jorder, 'Index', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'Index', function () {
     "use strict";
 
     /**
      * Instantiates class.
-     * @name jorder.Index.create
+     * @name giant.Index.create
      * @function
      * @param {string[]} fieldNames Field names
      * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
      * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @return {jorder.Index}
+     * @return {giant.Index}
      */
 
     /**
      * Table index. Keeps track of single of composite fields, enables binary search in tables.
-     * @class jorder.Index
-     * @extends troop.Base
+     * @class giant.Index
+     * @extends giant.Base
      */
-    jorder.Index = troop.Base.extend()
-        .addPrivateMethods(/** @lends jorder.Index# */{
+    giant.Index = giant.Base.extend()
+        .addPrivateMethods(/** @lends giant.Index# */{
             /**
              * Retrieves unique row IDs for non-unique list of keys (row signatures).
-             * @param {sntls.Hash} keysAsHash
+             * @param {giant.Hash} keysAsHash
              * @returns {string[]}
              * @private
              */
@@ -35,7 +35,7 @@ troop.postpone(jorder, 'Index', function () {
                     .getUniqueValues();
             }
         })
-        .addMethods(/** @lends jorder.Index# */{
+        .addMethods(/** @lends giant.Index# */{
             /**
              * @param {string[]} fieldNames Field names
              * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
@@ -47,29 +47,29 @@ troop.postpone(jorder, 'Index', function () {
                 /**
                  * Row signature associated with index.
                  * Provides validation and index key generation.
-                 * @type {jorder.RowSignature}
+                 * @type {giant.RowSignature}
                  */
-                this.rowSignature = jorder.RowSignature.create(fieldNames, signatureType, isCaseInsensitive);
+                this.rowSignature = giant.RowSignature.create(fieldNames, signatureType, isCaseInsensitive);
 
                 /**
                  * Holds index key -> row ID associations.
                  * One index key may reference more than one row IDs.
-                 * @type {sntls.StringDictionary}
+                 * @type {giant.StringDictionary}
                  */
-                this.rowIdLookup = sntls.StringDictionary.create();
+                this.rowIdLookup = giant.StringDictionary.create();
 
                 /**
                  * Holds index keys in ascending order. (With multiplicity)
-                 * @type {sntls.OrderedStringList}
+                 * @type {giant.OrderedStringList}
                  */
-                this.sortedKeys = sntls.OrderedStringList.create([], orderType);
+                this.sortedKeys = giant.OrderedStringList.create([], orderType);
             },
 
             /**
              * Adds single row to index.
              * @param {object} row Table row
              * @param {string|number} rowId Row ID: original index of row in table
-             * @return {jorder.Index}
+             * @return {giant.Index}
              */
             addRow: function (row, rowId) {
                 // calculating index keys based on row
@@ -92,7 +92,7 @@ troop.postpone(jorder, 'Index', function () {
              * Removes single row from index.
              * @param {object} row Table row
              * @param {string} rowId Row ID: original index of row in table
-             * @return {jorder.Index}
+             * @return {giant.Index}
              */
             removeRow: function (row, rowId) {
                 // calculating index keys based on row
@@ -113,7 +113,7 @@ troop.postpone(jorder, 'Index', function () {
 
             /**
              * Clears index buffers.
-             * @return {jorder.Index}
+             * @return {giant.Index}
              */
             clearBuffers: function () {
                 // clearing lookup buffers
@@ -142,7 +142,7 @@ troop.postpone(jorder, 'Index', function () {
              * Supposed to be used on unique indexes, where position in the index is unambiguous.
              * @param {number} startOffset
              * @param {number} endOffset
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             getRowIdsBetweenAsHash: function (startOffset, endOffset) {
                 return this.sortedKeys.items.slice(startOffset, endOffset)
@@ -172,7 +172,7 @@ troop.postpone(jorder, 'Index', function () {
                     keys = [keys];
                 }
 
-                return sntls.StringDictionary.create(keys)
+                return giant.StringDictionary.create(keys)
                     // selecting row IDs for specified keys
                     .combineWith(this.rowIdLookup)
                     // collapsing unique row IDs
@@ -182,10 +182,10 @@ troop.postpone(jorder, 'Index', function () {
             /**
              * Retrieves a list of row ids associated with the specified keys, wrapped in a hash.
              * @param {string[]|number[]|string|number} keys
-             * @return {sntls.Hash}
+             * @return {giant.Hash}
              */
             getRowIdsForKeysAsHash: function (keys) {
-                return sntls.Hash.create(this.getRowIdsForKeys(keys));
+                return giant.Hash.create(this.getRowIdsForKeys(keys));
             },
 
             /**
@@ -215,10 +215,10 @@ troop.postpone(jorder, 'Index', function () {
              * @param {string|number} endValue Upper index bound
              * @param {number} [offset=0] Number of index entries to skip at start.
              * @param {number} [limit=Infinity] Maximum number of index entries to fetch.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             getRowIdsForKeyRangeAsHash: function (startValue, endValue, offset, limit) {
-                return sntls.Hash.create(this.getRowIdsForKeyRange(startValue, endValue, offset, limit));
+                return giant.Hash.create(this.getRowIdsForKeyRange(startValue, endValue, offset, limit));
             },
 
             /**
@@ -245,10 +245,10 @@ troop.postpone(jorder, 'Index', function () {
              * @param {string} prefix Key prefix to be matched.
              * @param {number} [offset=0] Number of index entries to skip at start.
              * @param {number} [limit=Infinity] Maximum number of index entries to fetch.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             getRowIdsForPrefixAsHash: function (prefix, offset, limit) {
-                return sntls.Hash.create(this.getRowIdsForPrefix(prefix, offset, limit));
+                return giant.Hash.create(this.getRowIdsForPrefix(prefix, offset, limit));
             }
         });
 });
@@ -256,16 +256,16 @@ troop.postpone(jorder, 'Index', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
-        /** @param {jorder.Index} expr */
+    giant.addTypes(/** @lends giant */{
+        /** @param {giant.Index} expr */
         isIndex: function (expr) {
-            return jorder.Index.isBaseOf(expr);
+            return giant.Index.isBaseOf(expr);
         },
 
-        /** @param {jorder.Index} [expr] */
+        /** @param {giant.Index} [expr] */
         isIndexOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   jorder.Index.isBaseOf(expr);
+                   giant.Index.isBaseOf(expr);
         }
     });
 }());

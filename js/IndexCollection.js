@@ -1,30 +1,30 @@
-/*global dessert, troop, sntls, jorder */
-troop.postpone(jorder, 'IndexCollection', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'IndexCollection', function () {
     "use strict";
 
-    var base = sntls.Collection;
+    var base = giant.Collection;
 
     /**
      * Instantiates class.
-     * @name jorder.IndexCollection.create
+     * @name giant.IndexCollection.create
      * @function
      * @param {object|Array} [items] Initial contents.
-     * @return {jorder.IndexCollection}
+     * @return {giant.IndexCollection}
      */
 
     /**
      * Collection of indexes. Selects index(es) contained by the collection that fit data row(s).
-     * @class jorder.IndexCollection
-     * @extends sntls.Collection
-     * @extends jorder.Index
+     * @class giant.IndexCollection
+     * @extends giant.Collection
+     * @extends giant.Index
      */
-    jorder.IndexCollection = sntls.Collection.of(jorder.Index).extend()
-        .addPrivateMethods(/** @lends jorder.IndexCollection */{
+    giant.IndexCollection = giant.Collection.of(giant.Index).extend()
+        .addPrivateMethods(/** @lends giant.IndexCollection */{
             /**
              * Determines whether all fields of the specified index
              * are present in the specified row.
              * @param {object} row Table row
-             * @param {jorder.Index} index
+             * @param {giant.Index} index
              * @return {Boolean}
              * @private
              */
@@ -34,7 +34,7 @@ troop.postpone(jorder, 'IndexCollection', function () {
 
             /**
              * Returns the field count for the specified index.
-             * @param {jorder.Index} index
+             * @param {giant.Index} index
              * @return {Number}
              * @private
              */
@@ -54,7 +54,7 @@ troop.postpone(jorder, 'IndexCollection', function () {
             },
 
             /**
-             * @param {jorder.Index} index
+             * @param {giant.Index} index
              * @private
              */
             _getIndexSignature: function (index) {
@@ -62,24 +62,24 @@ troop.postpone(jorder, 'IndexCollection', function () {
             },
 
             /**
-             * @param {jorder.RowSignature} rowSignature
+             * @param {giant.RowSignature} rowSignature
              * @param {string} orderType
              * @returns {string}
              * @private
              */
             _getIndexSignatureFromRowSignature: function (rowSignature, orderType) {
-                return rowSignature.fieldSignature + '%' + (orderType || sntls.OrderedList.orderTypes.ascending);
+                return rowSignature.fieldSignature + '%' + (orderType || giant.OrderedList.orderTypes.ascending);
             }
         })
-        .addMethods(/** @lends jorder.IndexCollection# */{
+        .addMethods(/** @lends giant.IndexCollection# */{
             /**
              * Sets an index in the collection.
              * Item key is calculated based index signature.
-             * @param {jorder.Index} index
-             * @return {jorder.IndexCollection}
+             * @param {giant.Index} index
+             * @return {giant.IndexCollection}
              */
             setItem: function (index) {
-                dessert.isIndex(index, "Invalid index");
+                giant.isIndex(index, "Invalid index");
 
                 base.setItem.call(this, this._getIndexSignature(index), index);
 
@@ -89,17 +89,17 @@ troop.postpone(jorder, 'IndexCollection', function () {
             /**
              * Retrieves a collection of indexes that fully match the specified row.
              * @param {object} row
-             * @return {jorder.IndexCollection}
+             * @return {giant.IndexCollection}
              */
             getIndexesForRow: function (row) {
-                return /** @type {jorder.IndexCollection} */ this
+                return /** @type {giant.IndexCollection} */ this
                     .filterBySelector(this._isIndexContainedByRow.bind(this, row));
             },
 
             /**
              * Retrieves the first index matching the specified row.
              * @param {object} row
-             * @return {jorder.Index}
+             * @return {giant.Index}
              */
             getIndexForRow: function (row) {
                 return this
@@ -112,7 +112,7 @@ troop.postpone(jorder, 'IndexCollection', function () {
             /**
              * Retrieves the index best matching the specified row
              * @param {object} row
-             * @return {jorder.Index}
+             * @return {giant.Index}
              */
             getBestIndexForRow: function (row) {
                 return this
@@ -127,7 +127,7 @@ troop.postpone(jorder, 'IndexCollection', function () {
             /**
              * Retrieves the index best matching the specified field names.
              * @param {string[]} fieldNames
-             * @returns {jorder.Index}
+             * @returns {giant.Index}
              */
             getBestIndexForFields: function (fieldNames) {
                 var rowExpr = fieldNames.toStringDictionary().reverse();
@@ -139,10 +139,10 @@ troop.postpone(jorder, 'IndexCollection', function () {
              * @param {string[]} fieldNames
              * @param {string} [signatureType]
              * @param {string} [orderType]
-             * @return {jorder.Index}
+             * @return {giant.Index}
              */
             getIndexForFields: function (fieldNames, signatureType, orderType) {
-                var rowSignature = jorder.RowSignature.create(fieldNames, signatureType);
+                var rowSignature = giant.RowSignature.create(fieldNames, signatureType);
                 return this.getItem(this._getIndexSignatureFromRowSignature(rowSignature, orderType));
             }
         });

@@ -1,47 +1,47 @@
-/*global dessert, troop, sntls, jorder */
-troop.postpone(jorder, 'Table', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'Table', function () {
     "use strict";
 
-    var base = sntls.Collection,
+    var base = giant.Collection,
         self = base.extend();
 
     /**
      * Instantiates class.
-     * @name jorder.Table.create
+     * @name giant.Table.create
      * @function
      * @param {object[]} [json]
-     * @return {jorder.Table}
+     * @return {giant.Table}
      */
 
     /**
      * Indexed table. For quick table queries.
      * In technical terms, a table is a collection of rows, therefore it extends the Collection API.
-     * @class jorder.Table
-     * @extends sntls.Collection
+     * @class giant.Table
+     * @extends giant.Collection
      */
-    jorder.Table = self
-        .addMethods(/** @lends jorder.Table# */{
+    giant.Table = self
+        .addMethods(/** @lends giant.Table# */{
             /**
              * @param {object[]} [json]
              * @ignore
              */
             init: function (json) {
-                dessert.isArrayOptional(json, "Invalid table buffer");
+                giant.isArrayOptional(json, "Invalid table buffer");
 
                 base.init.call(this, json || []);
 
                 /**
                  * Indexes associated with table
-                 * @type {jorder.IndexCollection}
+                 * @type {giant.IndexCollection}
                  */
-                this.indexCollection = jorder.IndexCollection.create();
+                this.indexCollection = giant.IndexCollection.create();
             },
 
             /**
              * Sets row at given row ID.
              * @param {string|number} rowId
              * @param {object} row
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             setItem: function (rowId, row) {
                 // updating indexes
@@ -57,11 +57,11 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Sets multiple rows at once.
              * @param {object} rowIdRowPairs
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             setItems: function (rowIdRowPairs) {
                 var that = this;
-                sntls.Collection.create(rowIdRowPairs)
+                giant.Collection.create(rowIdRowPairs)
                     .forEachItem(function (row, rowId) {
                         that.setItem(rowId, row);
                     });
@@ -71,7 +71,7 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Deletes a row from the given row ID.
              * @param {string|number} rowId
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             deleteItem: function (rowId) {
                 // updating indexes
@@ -85,14 +85,14 @@ troop.postpone(jorder, 'Table', function () {
 
             /**
              * Clones table.
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             clone: function () {
                 // cloning collection
-                var result = /** @type jorder.Table */base.clone.call(this);
+                var result = /** @type giant.Table */base.clone.call(this);
 
                 // adding table specific properties
-                this.indexCollection.forEachItem(function (/**jorder.Index*/ index) {
+                this.indexCollection.forEachItem(function (/**giant.Index*/ index) {
                     var rowSignature = index.rowSignature;
                     result.addIndex(rowSignature.fieldNames, rowSignature.signatureType);
                 });
@@ -106,10 +106,10 @@ troop.postpone(jorder, 'Table', function () {
              * @param {string} [signatureType] Index type
              * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
              * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             addIndex: function (fieldNames, signatureType, isCaseInsensitive, orderType) {
-                var index = jorder.Index.create(fieldNames, signatureType, isCaseInsensitive, orderType);
+                var index = giant.Index.create(fieldNames, signatureType, isCaseInsensitive, orderType);
 
                 // adding index to collection
                 this.indexCollection.setItem(index);
@@ -122,7 +122,7 @@ troop.postpone(jorder, 'Table', function () {
 
             /**
              * Re-indexes table by rebuilding all indexes associated with table.
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             reIndex: function () {
                 var indexCollection = this.indexCollection;
@@ -139,10 +139,10 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Retrieves rows assigned to the specified row IDs, wrapped in a hash.
              * @param {string[]|number[]} rowIds
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             queryByRowIdsAsHash: function (rowIds) {
-                return sntls.StringDictionary.create(rowIds)
+                return giant.StringDictionary.create(rowIds)
                     .combineWith(this.toDictionary());
             },
 
@@ -158,12 +158,12 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Fetches table rows that match specified row expression and wraps them in a hash.
              * @param {object} rowExpr Row expression.
-             * @return {sntls.Hash}
+             * @return {giant.Hash}
              */
             queryByRowAsHash: function (rowExpr) {
                 var index = this.indexCollection.getBestIndexForRow(rowExpr);
 
-                dessert.assert(!!index, "No index matches row");
+                giant.assert(!!index, "No index matches row");
 
                 return index
                     // obtaining matching row IDs
@@ -185,16 +185,16 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Fetches table rows that match specified rows or row fractions and wraps them in a hash.
              * @param {object[]} rows Table rows or relevant fields w/ values
-             * @return {sntls.Hash}
+             * @return {giant.Hash}
              */
             queryByRowsAsHash: function (rows) {
-                dessert.isArray(rows, "Invalid rows expression");
+                giant.isArray(rows, "Invalid rows expression");
 
                 var index = this.indexCollection.getBestIndexForRow(rows[0]);
 
-                dessert.assert(!!index, "No index matches row");
+                giant.assert(!!index, "No index matches row");
 
-                return sntls.Collection.create(rows)
+                return giant.Collection.create(rows)
                     // getting a collection of all keys fitting expression
                     .passEachItemTo(index.rowSignature.getKeysForRow, index.rowSignature)
                     // obtaining unique signatures matching rows
@@ -224,7 +224,7 @@ troop.postpone(jorder, 'Table', function () {
              * Fetches table rows at the specified offset on the specified field, and wraps it in a hash.
              * @param {string[]} fieldNames Names of fields in which the offset must be matched.
              * @param {number} offset Position of row inside the table, in the order of the specified field.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             queryByOffsetAsHash: function (fieldNames, offset) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -252,7 +252,7 @@ troop.postpone(jorder, 'Table', function () {
              * @param {string[]} fieldNames Names of fields in which the offset range must be matched.
              * @param {number} startOffset Start of offset range
              * @param {number} endOffset End of offset range
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             queryByOffsetRangeAsHash: function (fieldNames, startOffset, endOffset) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -283,7 +283,7 @@ troop.postpone(jorder, 'Table', function () {
              * @param {string|number} endValue End of value range
              * @param {number} [offset=0] Number of items to skip at the start of the result set.
              * @param {number} [limit=Infinity] Maximum number of items in result set.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             queryByRangeAsHash: function (fieldNames, startValue, endValue, offset, limit) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -315,12 +315,12 @@ troop.postpone(jorder, 'Table', function () {
              * @param {string} prefix Prefix that must be matched.
              * @param {number} [offset=0] Number of items to skip at the start of the result set.
              * @param {number} [limit=Infinity] Maximum number of items in result set.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             queryByPrefixAsHash: function (fieldNames, prefix, offset, limit) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
 
-                dessert.assert(!!index, "No index matches row");
+                giant.assert(!!index, "No index matches row");
 
                 return index
                     // obtaining row IDs matching prefix
@@ -345,7 +345,7 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Inserts single row into the table, updating all relevant indexes.
              * @param {object} row Table row
-             * @returns {jorder.Table}
+             * @returns {giant.Table}
              */
             insertRow: function (row) {
                 // adding row to table
@@ -364,10 +364,10 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Inserts multiple rows into the table. Updates all relevant indexes.
              * @param {object[]} rows Array of table rows.
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             insertRows: function (rows) {
-                sntls.Collection.create(rows)
+                giant.Collection.create(rows)
                     .passEachItemTo(this.insertRow, this);
                 return this;
             },
@@ -377,11 +377,11 @@ troop.postpone(jorder, 'Table', function () {
              * the matching row(s) by reference.
              * @param {object} rowExpr Row expression to be matched.
              * @param {object} row Row value after update.
-             * @param {jorder.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
-             * @returns {jorder.Table}
+             * @param {giant.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
+             * @returns {giant.Table}
              */
             updateRowsByRow: function (rowExpr, row, index) {
-                dessert
+                giant
                     .isObject(rowExpr, "Invalid row expression")
                     .isObject(row, "Invalid row")
                     .isIndexOptional(index, "Invalid index");
@@ -391,7 +391,7 @@ troop.postpone(jorder, 'Table', function () {
                 // getting an index for the row
                 index = index || indexCollection.getBestIndexForRow(rowExpr);
 
-                dessert.assert(!!index, "No index matches row");
+                giant.assert(!!index, "No index matches row");
 
                 var affectedRowIds = index
                     .getRowIdsForKeysAsHash(index.rowSignature.getKeysForRow(rowExpr))
@@ -413,11 +413,11 @@ troop.postpone(jorder, 'Table', function () {
             /**
              * Removes rows from the table that match the specified row.
              * @param {object} rowExpr Row expression to be matched.
-             * @param {jorder.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
-             * @return {jorder.Table}
+             * @param {giant.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
+             * @return {giant.Table}
              */
             deleteRowsByRow: function (rowExpr, index) {
-                dessert
+                giant
                     .isObject(rowExpr, "Invalid row expression")
                     .isIndexOptional(index, "Invalid index");
 
@@ -426,7 +426,7 @@ troop.postpone(jorder, 'Table', function () {
                 // getting an index for the row
                 index = index || indexCollection.getBestIndexForRow(rowExpr);
 
-                dessert.assert(!!index, "No index matches row");
+                giant.assert(!!index, "No index matches row");
 
                 var affectedRowIds = index
                     .getRowIdsForKeysAsHash(index.rowSignature.getKeysForRow(rowExpr))
@@ -443,7 +443,7 @@ troop.postpone(jorder, 'Table', function () {
 
             /**
              * Clears rows and associated indexes.
-             * @return {jorder.Table}
+             * @return {giant.Table}
              */
             clear: function () {
                 base.clear.call(this);
@@ -456,44 +456,44 @@ troop.postpone(jorder, 'Table', function () {
         });
 
     // aliases
-    jorder.Table.addMethods(/** @lends jorder.Table# */{
+    giant.Table.addMethods(/** @lends giant.Table# */{
         /**
          * @function
          * @param {string|number} rowId
          * @param {object} row
-         * @return {jorder.Table}
-         * @see jorder.Table#setItem
+         * @return {giant.Table}
+         * @see giant.Table#setItem
          */
         setRow: self.setItem,
 
         /**
          * @function
          * @param {object} rowIdRowPairs
-         * @return {jorder.Table}
-         * @see jorder.Table#setItems
+         * @return {giant.Table}
+         * @see giant.Table#setItems
          */
         setRows: self.setItems,
 
         /**
          * @function
          * @param {string|number} rowId
-         * @return {jorder.Table}
-         * @see jorder.Table#deleteItem
+         * @return {giant.Table}
+         * @see giant.Table#deleteItem
          */
         deleteRow: self.deleteItem
     });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash */{
+    giant.Hash.addMethods(/** @lends giant.Hash */{
         /**
          * Reinterprets hash as table. Hash must contain array buffer.
-         * @return {jorder.Table}
+         * @return {giant.Table}
          */
         toTable: function () {
-            return jorder.Table.create(this.items);
+            return giant.Table.create(this.items);
         }
     });
 });
@@ -501,16 +501,16 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
-        /** @param {jorder.Table} expr */
+    giant.addTypes(/** @lends giant */{
+        /** @param {giant.Table} expr */
         isTable: function (expr) {
-            return jorder.Table.isBaseOf(expr);
+            return giant.Table.isBaseOf(expr);
         },
 
-        /** @param {jorder.Table} [expr] */
+        /** @param {giant.Table} [expr] */
         isTableOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   jorder.Table.isBaseOf(expr);
+                   giant.Table.isBaseOf(expr);
         }
     });
 }());
