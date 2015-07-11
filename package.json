@@ -17,10 +17,10 @@
         "url" : "git@github.com:giantjs/giant-table.git"
     },
     "dependencies"   : {
-        "dessert": "~0.3.2",
-        "q"      : "^1.4.1",
-        "sntls"  : "~0.21.0",
-        "troop"  : "~0.9.0"
+        "giant-assertion": "0.0.3",
+        "giant-data"     : "0.0.3",
+        "giant-oop"      : "0.0.3",
+        "q"              : "^1.4.1"
     },
     "devDependencies": {
         "QUnitAdapter"        : "https://dl.dropboxusercontent.com/u/9258903/packages/QUnitAdapter-0.1.0.tgz",
@@ -37,7 +37,7 @@
         "q"                   : "^1.4.0"
     },
     "files"          : [
-        "jorder.js"
+        "giant-table.js"
     ],
-    "main"           : "jorder.js"
+    "main"           : "giant-table.js"
 }
