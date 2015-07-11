@@ -1,7 +1,7 @@
 {
     "name"           : "giant-table",
     "version"        : "0.0.3",
-    "description"    : "Indexed table cache",
+    "description"    : "Indexed table module for Giant",
     "keywords"       : [
         "table",
         "indexed",
