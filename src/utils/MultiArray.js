@@ -1,4 +1,4 @@
-/*global giant, giant, giant, giant */
+/*global giant */
 giant.postpone(giant, 'MultiArray', function () {
     "use strict";
 

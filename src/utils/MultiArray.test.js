@@ -1,5 +1,5 @@
 /*global module, test, ok, raises, equal, strictEqual, deepEqual */
-/*global giant, giant */
+/*global giant */
 (function () {
     "use strict";
 
