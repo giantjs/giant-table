@@ -16,6 +16,7 @@ giant.postpone(giant, 'Table', function () {
     /**
      * Indexed table. For quick table queries.
      * In technical terms, a table is a collection of rows, therefore it extends the Collection API.
+     * TODO: Rename to IndexedTable.
      * @class giant.Table
      * @extends giant.Collection
      */
