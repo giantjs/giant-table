@@ -21,6 +21,7 @@
         "giant-data"     : "0.0.5",
         "giant-namespace": "0.0.5",
         "giant-oop"      : "0.0.5",
+        "giant-utils"    : "0.0.5",
         "q"              : "^1.4.1"
     },
     "devDependencies": {
