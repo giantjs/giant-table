@@ -34,8 +34,7 @@
         "grunt-jsdoc"         : "~0.3.3",
         "grunt-jstestdriver"  : "git://github.com/danstocker/grunt-jstestdriver.git",
         "grunt-regex-replace" : "~0.2.6",
-        "grunt-yui-compressor": "~0.4.0",
-        "phil"                : "~0.2.3"
+        "grunt-yui-compressor": "~0.4.0"
     },
     "files"          : [
         "giant-table.js"
