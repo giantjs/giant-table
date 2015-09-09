@@ -627,7 +627,7 @@
 
     test("Updating rows matching row expression", function () {
         var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(giant.Utils.shallowCopy(json))
+            table = giant.Table.create(giant.DataUtils.shallowCopy(json))
                 .addIndex(['volumes'], SIGNATURE_TYPES.number),
             row = {
                 'order'  : 0,
