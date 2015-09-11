@@ -43,7 +43,7 @@
     });
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.Table.create({foo: 'bar'});
         }, "Invalid buffer");
 
@@ -638,15 +638,15 @@
             rowsRemoved = [],
             rowsAdded = [];
 
-        raises(function () {
+        throws(function () {
             table.updateRowsByRow('foo', row);
         }, "should raise exception on invalid row expression argument");
 
-        raises(function () {
+        throws(function () {
             table.updateRowsByRow({volumes: 1}, 'foo');
         }, "should raise exception on invalid row argument");
 
-        raises(function () {
+        throws(function () {
             table.updateRowsByRow({volumes: 1}, row, 'foo');
         }, "should raise exception on invalid index argument");
 
@@ -694,15 +694,15 @@
             rowExpression = {foo: "hello", bar: "world"},
             affectedSignatures = [];
 
-        raises(function () {
+        throws(function () {
             table.deleteRowsByRow('foo');
         }, "should raise exception on invalid row expression argument");
 
-        raises(function () {
+        throws(function () {
             table.deleteRowsByRow({foo: "hello", bar: "world"}, 'foo');
         }, "should raise exception on invalid index argument");
 
-        raises(function () {
+        throws(function () {
             table.deleteRowsByRow({hello: "world"});
         }, "should raise exception when no index fits specified row");
 

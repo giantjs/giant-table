@@ -5,7 +5,7 @@
     module("IrregularNumber");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.IrregularNumber.create('foo');
         }, "Invalid radices");
 

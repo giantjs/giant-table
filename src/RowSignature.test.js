@@ -29,19 +29,19 @@
     });
 
     test("Instantiation exceptions", function () {
-        raises(function () {
+        throws(function () {
             giant.RowSignature.create('fields not array');
         }, "Invalid fields array");
 
-        raises(function () {
+        throws(function () {
             giant.RowSignature.create([]);
         }, "Empty fields array");
 
-        raises(function () {
+        throws(function () {
             giant.RowSignature.create(['a', 'b'], 'foo');
         }, "Invalid signature type");
 
-        raises(function () {
+        throws(function () {
             giant.RowSignature.create(['a', 'b'], 'foo', 'bar');
         }, "Invalid case flag");
     });
@@ -104,7 +104,7 @@
             "should URI encode and return lowercase combined field values for case-insensitive string signature");
 
         signature = giant.RowSignature.create(['foo'], 'fullText');
-        raises(function () {
+        throws(function () {
             signature.getKeyForRow({foo: 'hello world'});
         }, "should raise exception on signature types other than number or string");
     });

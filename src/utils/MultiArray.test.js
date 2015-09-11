@@ -5,7 +5,7 @@
     module("MultiArray");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.MultiArray.create('foo');
         }, "Invalid items");
 
