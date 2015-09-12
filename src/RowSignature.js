@@ -11,7 +11,7 @@ giant.postpone(giant, 'RowSignature', function () {
      * @param {string[]} fieldNames Field names
      * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
      * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
-     * @return {giant.RowSignature}
+     * @returns {giant.RowSignature}
      */
 
     /**
@@ -68,7 +68,7 @@ giant.postpone(giant, 'RowSignature', function () {
              * the specified value at each position.
              * @param {number} length
              * @param {*} value
-             * @return {Array}
+             * @returns {Array}
              * @private
              * @memberOf giant.RowSignature
              */
@@ -84,7 +84,7 @@ giant.postpone(giant, 'RowSignature', function () {
             /**
              * Collection iteration handler URI encoding string items.
              * @param {string} item Collection item
-             * @return {string}
+             * @returns {string}
              * @private
              */
             _uriEncoder: function (item) {
@@ -96,7 +96,7 @@ giant.postpone(giant, 'RowSignature', function () {
             /**
              * Collection iteration handler URI encoding string array items.
              * @param {Array} item Item in an array collection.
-             * @return {Array}
+             * @returns {Array}
              * @private
              */
             _arrayUriEncoder: function (item) {
@@ -181,7 +181,7 @@ giant.postpone(giant, 'RowSignature', function () {
             /**
              * Generates a key for the submitted row based on the current signature rules.
              * @param {object} row Raw table row
-             * @return {string|number}
+             * @returns {string|number}
              */
             getKeyForRow: function (row) {
                 var SIGNATURE_TYPES = this.SIGNATURE_TYPES,
@@ -237,7 +237,7 @@ giant.postpone(giant, 'RowSignature', function () {
             /**
              * Generates multiple keys for the submitted row based on the current signature rules.
              * @param {object} row Raw table row
-             * @return {string[]}
+             * @returns {string[]}
              */
             getKeysForRow: function (row) {
                 if (!row) {
@@ -311,7 +311,7 @@ giant.postpone(giant, 'RowSignature', function () {
              * Tells whether all signature fields are present in the row,
              * ie. that the row fits the signature fully.
              * @param {object} row Raw table row
-             * @return {boolean}
+             * @returns {boolean}
              * TODO: adding type check
              */
             containedByRow: function (row) {
@@ -331,7 +331,7 @@ giant.postpone(giant, 'RowSignature', function () {
             /**
              * Tells whether all row fields are present in the signature.
              * @param {object} row Raw table row
-             * @return {boolean}
+             * @returns {boolean}
              */
             containsRow: function (row) {
                 var fieldNameLookup = this.fieldNameLookup,

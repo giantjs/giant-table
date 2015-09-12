@@ -9,7 +9,7 @@ giant.postpone(giant, 'IndexCollection', function () {
      * @name giant.IndexCollection.create
      * @function
      * @param {object|Array} [items] Initial contents.
-     * @return {giant.IndexCollection}
+     * @returns {giant.IndexCollection}
      */
 
     /**
@@ -25,7 +25,7 @@ giant.postpone(giant, 'IndexCollection', function () {
              * are present in the specified row.
              * @param {object} row Table row
              * @param {giant.Index} index
-             * @return {Boolean}
+             * @returns {Boolean}
              * @private
              */
             _isIndexContainedByRow: function (row, index) {
@@ -35,7 +35,7 @@ giant.postpone(giant, 'IndexCollection', function () {
             /**
              * Returns the field count for the specified index.
              * @param {giant.Index} index
-             * @return {Number}
+             * @returns {Number}
              * @private
              */
             _indexFieldCountMapper: function (index) {
@@ -46,7 +46,7 @@ giant.postpone(giant, 'IndexCollection', function () {
              * Array.sort() comparator for descending order.
              * @param {number} a
              * @param {number} b
-             * @return {Number}
+             * @returns {Number}
              * @private
              */
             _descNumericComparator: function (a, b) {
@@ -76,7 +76,7 @@ giant.postpone(giant, 'IndexCollection', function () {
              * Sets an index in the collection.
              * Item key is calculated based index signature.
              * @param {giant.Index} index
-             * @return {giant.IndexCollection}
+             * @returns {giant.IndexCollection}
              */
             setItem: function (index) {
                 giant.isIndex(index, "Invalid index");
@@ -89,7 +89,7 @@ giant.postpone(giant, 'IndexCollection', function () {
             /**
              * Retrieves a collection of indexes that fully match the specified row.
              * @param {object} row
-             * @return {giant.IndexCollection}
+             * @returns {giant.IndexCollection}
              */
             getIndexesForRow: function (row) {
                 return /** @type {giant.IndexCollection} */ this
@@ -99,7 +99,7 @@ giant.postpone(giant, 'IndexCollection', function () {
             /**
              * Retrieves the first index matching the specified row.
              * @param {object} row
-             * @return {giant.Index}
+             * @returns {giant.Index}
              */
             getIndexForRow: function (row) {
                 return this
@@ -112,7 +112,7 @@ giant.postpone(giant, 'IndexCollection', function () {
             /**
              * Retrieves the index best matching the specified row
              * @param {object} row
-             * @return {giant.Index}
+             * @returns {giant.Index}
              */
             getBestIndexForRow: function (row) {
                 return this
@@ -139,7 +139,7 @@ giant.postpone(giant, 'IndexCollection', function () {
              * @param {string[]} fieldNames
              * @param {string} [signatureType]
              * @param {string} [orderType]
-             * @return {giant.Index}
+             * @returns {giant.Index}
              */
             getIndexForFields: function (fieldNames, signatureType, orderType) {
                 var rowSignature = giant.RowSignature.create(fieldNames, signatureType);

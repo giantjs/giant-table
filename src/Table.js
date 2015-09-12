@@ -10,7 +10,7 @@ giant.postpone(giant, 'Table', function () {
      * @name giant.Table.create
      * @function
      * @param {object[]} [json]
-     * @return {giant.Table}
+     * @returns {giant.Table}
      */
 
     /**
@@ -42,7 +42,7 @@ giant.postpone(giant, 'Table', function () {
              * Sets row at given row ID.
              * @param {string|number} rowId
              * @param {object} row
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             setItem: function (rowId, row) {
                 // updating indexes
@@ -58,7 +58,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Sets multiple rows at once.
              * @param {object} rowIdRowPairs
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             setItems: function (rowIdRowPairs) {
                 var that = this;
@@ -72,7 +72,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Deletes a row from the given row ID.
              * @param {string|number} rowId
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             deleteItem: function (rowId) {
                 // updating indexes
@@ -86,7 +86,7 @@ giant.postpone(giant, 'Table', function () {
 
             /**
              * Clones table.
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             clone: function () {
                 // cloning collection
@@ -107,7 +107,7 @@ giant.postpone(giant, 'Table', function () {
              * @param {string} [signatureType] Index type
              * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
              * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             addIndex: function (fieldNames, signatureType, isCaseInsensitive, orderType) {
                 var index = giant.Index.create(fieldNames, signatureType, isCaseInsensitive, orderType);
@@ -123,7 +123,7 @@ giant.postpone(giant, 'Table', function () {
 
             /**
              * Re-indexes table by rebuilding all indexes associated with table.
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             reIndex: function () {
                 var indexCollection = this.indexCollection;
@@ -159,7 +159,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Fetches table rows that match specified row expression and wraps them in a hash.
              * @param {object} rowExpr Row expression.
-             * @return {giant.Hash}
+             * @returns {giant.Hash}
              */
             queryByRowAsHash: function (rowExpr) {
                 var index = this.indexCollection.getBestIndexForRow(rowExpr);
@@ -177,7 +177,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Fetches table rows that match specified row expression.
              * @param {object} rowExpr Table row or relevant field w/ value
-             * @return {Array}
+             * @returns {Array}
              */
             queryByRow: function (rowExpr) {
                 return this.queryByRowAsHash(rowExpr).items;
@@ -186,7 +186,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Fetches table rows that match specified rows or row fractions and wraps them in a hash.
              * @param {object[]} rows Table rows or relevant fields w/ values
-             * @return {giant.Hash}
+             * @returns {giant.Hash}
              */
             queryByRowsAsHash: function (rows) {
                 giant.isArray(rows, "Invalid rows expression");
@@ -215,7 +215,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Fetches table rows that match specified rows or row fractions.
              * @param {object[]} rows Table rows or relevant fields w/ values
-             * @return {Array}
+             * @returns {Array}
              */
             queryByRows: function (rows) {
                 return this.queryByRowsAsHash(rows).items;
@@ -365,7 +365,7 @@ giant.postpone(giant, 'Table', function () {
             /**
              * Inserts multiple rows into the table. Updates all relevant indexes.
              * @param {object[]} rows Array of table rows.
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             insertRows: function (rows) {
                 giant.Collection.create(rows)
@@ -415,7 +415,7 @@ giant.postpone(giant, 'Table', function () {
              * Removes rows from the table that match the specified row.
              * @param {object} rowExpr Row expression to be matched.
              * @param {giant.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             deleteRowsByRow: function (rowExpr, index) {
                 giant
@@ -444,7 +444,7 @@ giant.postpone(giant, 'Table', function () {
 
             /**
              * Clears rows and associated indexes.
-             * @return {giant.Table}
+             * @returns {giant.Table}
              */
             clear: function () {
                 base.clear.call(this);
@@ -462,7 +462,7 @@ giant.postpone(giant, 'Table', function () {
          * @function
          * @param {string|number} rowId
          * @param {object} row
-         * @return {giant.Table}
+         * @returns {giant.Table}
          * @see giant.Table#setItem
          */
         setRow: self.setItem,
@@ -470,7 +470,7 @@ giant.postpone(giant, 'Table', function () {
         /**
          * @function
          * @param {object} rowIdRowPairs
-         * @return {giant.Table}
+         * @returns {giant.Table}
          * @see giant.Table#setItems
          */
         setRows: self.setItems,
@@ -478,7 +478,7 @@ giant.postpone(giant, 'Table', function () {
         /**
          * @function
          * @param {string|number} rowId
-         * @return {giant.Table}
+         * @returns {giant.Table}
          * @see giant.Table#deleteItem
          */
         deleteRow: self.deleteItem
@@ -491,7 +491,7 @@ giant.amendPostponed(giant, 'Hash', function () {
     giant.Hash.addMethods(/** @lends giant.Hash */{
         /**
          * Reinterprets hash as table. Hash must contain array buffer.
-         * @return {giant.Table}
+         * @returns {giant.Table}
          */
         toTable: function () {
             return giant.Table.create(this.items);

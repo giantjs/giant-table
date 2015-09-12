@@ -7,7 +7,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
      * @name giant.IrregularNumber.create
      * @function
      * @param {number[]} radices
-     * @return {giant.IrregularNumber}
+     * @returns {giant.IrregularNumber}
      */
 
     /**
@@ -20,7 +20,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
         .addPrivateMethods(/** @lends giant.IrregularNumber */{
             /**
              * Calculates the maximum value possible in this number system
-             * @return {Number}
+             * @returns {Number}
              * @private
              */
             _getMaxValue: function () {
@@ -37,7 +37,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
 
             /**
              * Calculates cumulative product of radices
-             * @return {Array}
+             * @returns {Array}
              * @private
              */
             _getRadixProducts: function () {
@@ -56,7 +56,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
             /**
              * Converts scalar value to digits according to radices
              * @param {number} scalar
-             * @return {number[]}
+             * @returns {number[]}
              * @private
              */
             _convertToDigits: function (scalar) {
@@ -76,7 +76,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
             /**
              * Converts scalar value to digits according to radices
              * @param {number[]} digits
-             * @return {number}
+             * @returns {number}
              * @private
              */
             _convertToScalar: function (digits) {
@@ -134,7 +134,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
             /**
              * Sets scalar value on irregular number
              * @param {number} value
-             * @return {giant.IrregularNumber}
+             * @returns {giant.IrregularNumber}
              */
             setScalar: function (value) {
                 giant.assert(value <= this.maxValue, "Value out of bounds");
@@ -151,7 +151,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
             /**
              * Sets irregular number digits
              * @param {number[]} digits
-             * @return {giant.IrregularNumber}
+             * @returns {giant.IrregularNumber}
              */
             setDigits: function (digits) {
                 var radices = this.radices,
@@ -176,7 +176,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
 
             /**
              * Increments current value
-             * @return {giant.IrregularNumber}
+             * @returns {giant.IrregularNumber}
              */
             inc: function () {
                 var digits = this.asDigits,

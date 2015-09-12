@@ -10,7 +10,7 @@ giant.postpone(giant, 'Index', function () {
      * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
      * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @return {giant.Index}
+     * @returns {giant.Index}
      */
 
     /**
@@ -69,7 +69,7 @@ giant.postpone(giant, 'Index', function () {
              * Adds single row to index.
              * @param {object} row Table row
              * @param {string|number} rowId Row ID: original index of row in table
-             * @return {giant.Index}
+             * @returns {giant.Index}
              */
             addRow: function (row, rowId) {
                 // calculating index keys based on row
@@ -92,7 +92,7 @@ giant.postpone(giant, 'Index', function () {
              * Removes single row from index.
              * @param {object} row Table row
              * @param {string} rowId Row ID: original index of row in table
-             * @return {giant.Index}
+             * @returns {giant.Index}
              */
             removeRow: function (row, rowId) {
                 // calculating index keys based on row
@@ -113,7 +113,7 @@ giant.postpone(giant, 'Index', function () {
 
             /**
              * Clears index buffers.
-             * @return {giant.Index}
+             * @returns {giant.Index}
              */
             clearBuffers: function () {
                 // clearing lookup buffers
@@ -165,7 +165,7 @@ giant.postpone(giant, 'Index', function () {
              * Retrieves a list of row ids associated with the specified keys.
              * @param {string[]|number[]|string|number} keys Index keys to be looked up, expected to be
              * in correct case (ie. lowercase when index is case insensitive).
-             * @return {string[]}
+             * @returns {string[]}
              */
             getRowIdsForKeys: function (keys) {
                 if (!(keys instanceof Array)) {
@@ -182,7 +182,7 @@ giant.postpone(giant, 'Index', function () {
             /**
              * Retrieves a list of row ids associated with the specified keys, wrapped in a hash.
              * @param {string[]|number[]|string|number} keys
-             * @return {giant.Hash}
+             * @returns {giant.Hash}
              */
             getRowIdsForKeysAsHash: function (keys) {
                 return giant.Hash.create(this.getRowIdsForKeys(keys));
@@ -195,7 +195,7 @@ giant.postpone(giant, 'Index', function () {
              * @param {string|number} endValue Upper index bound
              * @param {number} [offset=0] Number of index entries to skip at start.
              * @param {number} [limit=Infinity] Maximum number of index entries to fetch.
-             * @return {string[]}
+             * @returns {string[]}
              */
             getRowIdsForKeyRange: function (startValue, endValue, offset, limit) {
                 if (this.rowSignature.isCaseInsensitive) {

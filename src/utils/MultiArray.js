@@ -9,7 +9,7 @@ giant.postpone(giant, 'MultiArray', function () {
      * @name giant.MultiArray.create
      * @function
      * @param {Array[]} items Array of arrays
-     * @return {giant.MultiArray}
+     * @returns {giant.MultiArray}
      */
 
     /**
@@ -25,7 +25,7 @@ giant.postpone(giant, 'MultiArray', function () {
             /**
              * Measures the number of possibilities for each item
              * and returns the counts in an array
-             * @return {Array}
+             * @returns {Array}
              * @private
              */
             _getItemLengths: function () {
@@ -73,7 +73,7 @@ giant.postpone(giant, 'MultiArray', function () {
 
             /**
              * Retrieves all possible combinations for the array
-             * @return {Array[]} Array of all possible outcomes
+             * @returns {Array[]} Array of all possible outcomes
              */
             getCombinations: function () {
                 var result = [],
@@ -92,7 +92,7 @@ giant.postpone(giant, 'MultiArray', function () {
 
             /**
              * Retrieves all combinations wrapped in a hash object
-             * @return {giant.Hash}
+             * @returns {giant.Hash}
              */
             getCombinationsAsHash: function () {
                 return giant.Hash.create(this.getCombinations());
@@ -105,7 +105,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 
     giant.Hash.addMethods(/** @lends giant.Hash */{
         /**
-         * @return {giant.MultiArray}
+         * @returns {giant.MultiArray}
          */
         toMultiArray: function () {
             return giant.MultiArray.create(this.items);
