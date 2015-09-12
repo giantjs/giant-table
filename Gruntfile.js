@@ -2,25 +2,47 @@
 module.exports = function (grunt) {
     "use strict";
 
-    var params = {
-        files: [
-            'src/namespace.js',
-            'src/utils/IrregularNumber.js',
-            'src/utils/MultiArray.js',
-            'src/RowSignature.js',
-            'src/Index.js',
-            'src/IndexCollection.js',
-            'src/Table.js',
-            'src/exports.js'
-        ],
+    var grocer = require('grocer'),
+        packageNode = require('./package.json'),
+        manifestNode = require('./manifest.json'),
+        manifest = grocer.Manifest.create(manifestNode),
+        multiTasks = [].toMultiTaskCollection(),
+        gruntTasks = [].toGruntTaskCollection();
 
-        test: [
-            'src/jsTestDriver.conf'
-        ],
+    grocer.GruntProxy.create()
+        .setGruntObject(grunt);
 
-        globals: {}
-    };
+    'concat'
+        .toMultiTask({
+            'default': {
+                src : manifest.getAssets('js')
+                    .getAssetNames(),
+                dest: 'lib/' + packageNode.name + '.js'
+            }
+        })
+        .setPackageName('grunt-contrib-concat')
+        .addToCollection(multiTasks);
 
-    // invoking common grunt process
-    require('common-gruntfile')(grunt, params);
+    'karma'
+        .toMultiTask({
+            'default': {
+                configFile: 'karma.conf.js',
+                singleRun : true
+            }
+        })
+        .setPackageName('grunt-karma')
+        .addToCollection(multiTasks);
+
+    'build'
+        .toAliasTask()
+        .addSubTasks('karma', 'concat')
+        .addToCollection(gruntTasks);
+
+    // registering tasks
+    multiTasks.toGruntConfig()
+        .applyConfig()
+        .getAliasTasksGroupedByTarget()
+        .mergeWith(multiTasks.toGruntTaskCollection())
+        .mergeWith(gruntTasks)
+        .applyTask();
 };

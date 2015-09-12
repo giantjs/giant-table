@@ -1,0 +1,16 @@
+{
+  "main": {
+    "assets": {
+      "js": [
+        "src/namespace.js",
+        "src/utils/IrregularNumber.def.js",
+        "src/utils/MultiArray.def.js",
+        "src/RowSignature.def.js",
+        "src/Index.def.js",
+        "src/IndexCollection.def.js",
+        "src/Table.def.js",
+        "src/exports.js"
+      ]
+    }
+  }
+}
