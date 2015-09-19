@@ -1,6 +1,6 @@
 {
   "name": "giant-table",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Indexed table module for Giant",
   "keywords": [
     "table",
@@ -17,11 +17,11 @@
     "url": "git@github.com:giantjs/giant-table.git"
   },
   "dependencies": {
-    "giant-assertion": "0.0.5",
-    "giant-data": "0.0.5",
-    "giant-namespace": "0.0.5",
-    "giant-oop": "0.0.5",
-    "giant-utils": "0.0.5",
+    "giant-assertion": "0.0.6",
+    "giant-data": "0.0.6",
+    "giant-namespace": "0.0.6",
+    "giant-oop": "0.0.6",
+    "giant-utils": "0.0.6",
     "q": "^1.4.1"
   },
   "devDependencies": {
