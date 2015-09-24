@@ -2,7 +2,7 @@
 $oop.postpone(giant, 'IndexCollection', function () {
     "use strict";
 
-    var base = giant.Collection;
+    var base = $data.Collection;
 
     /**
      * Instantiates class.
@@ -15,10 +15,10 @@ $oop.postpone(giant, 'IndexCollection', function () {
     /**
      * Collection of indexes. Selects index(es) contained by the collection that fit data row(s).
      * @class giant.IndexCollection
-     * @extends giant.Collection
+     * @extends $data.Collection
      * @extends giant.Index
      */
-    giant.IndexCollection = giant.Collection.of(giant.Index).extend()
+    giant.IndexCollection = $data.Collection.of(giant.Index).extend()
         .addPrivateMethods(/** @lends giant.IndexCollection */{
             /**
              * Determines whether all fields of the specified index
@@ -68,7 +68,7 @@ $oop.postpone(giant, 'IndexCollection', function () {
              * @private
              */
             _getIndexSignatureFromRowSignature: function (rowSignature, orderType) {
-                return rowSignature.fieldSignature + '%' + (orderType || giant.OrderedList.orderTypes.ascending);
+                return rowSignature.fieldSignature + '%' + (orderType || $data.OrderedList.orderTypes.ascending);
             }
         })
         .addMethods(/** @lends giant.IndexCollection# */{

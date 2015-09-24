@@ -2,7 +2,7 @@
 $oop.postpone(giant, 'MultiArray', function () {
     "use strict";
 
-    var base = giant.Hash;
+    var base = $data.Hash;
 
     /**
      * Instantiates class.
@@ -16,7 +16,7 @@ $oop.postpone(giant, 'MultiArray', function () {
      * An array that for each of its items holds an even distribution
      * of possible values (represented as arrays).
      * @class giant.MultiArray
-     * @extends giant.Hash
+     * @extends $data.Hash
      * @example
      * [[1, 2], [3], [4, 5]]
      */
@@ -92,18 +92,18 @@ $oop.postpone(giant, 'MultiArray', function () {
 
             /**
              * Retrieves all combinations wrapped in a hash object
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             getCombinationsAsHash: function () {
-                return giant.Hash.create(this.getCombinations());
+                return $data.Hash.create(this.getCombinations());
             }
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash */{
+    $data.Hash.addMethods(/** @lends $data.Hash */{
         /**
          * @returns {giant.MultiArray}
          */

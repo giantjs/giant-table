@@ -146,7 +146,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                  * Lookup object for field names
                  * @type {object}
                  */
-                this.fieldNameLookup = giant.StringDictionary
+                this.fieldNameLookup = $data.StringDictionary
                     .create({
                         1: fieldNames
                     })
@@ -198,7 +198,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                             return row[fieldNames[0]];
                         } else {
                             radices = this._createUniformArray(fieldNames.length, this.FIELD_SEPARATOR_NUMBER);
-                            digits = giant.Collection.create(row)
+                            digits = $data.Collection.create(row)
                                 .filterByKeys(fieldNames)
                                 .getValues();
 
@@ -213,7 +213,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                         if (fieldNames.length === 1) {
                             return this._uriEncoder(row[fieldNames[0]]);
                         } else {
-                            return giant.StringCollection.create(row)
+                            return $data.StringCollection.create(row)
                                 // reducing row to relevant fields
                                 .filterByKeys(fieldNames)
                                 // encoding field values
@@ -257,7 +257,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                         return this._arrayUriEncoder(row[fieldNames[0]]);
                     } else {
                         // calculating all possible signatures for row
-                        return giant.Collection.create(row)
+                        return $data.Collection.create(row)
                             // reducing row to relevant fields
                             .filterByKeys(fieldNames)
                             // discarding field names in row
@@ -267,7 +267,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                             .getCombinationsAsHash()
                             // joining combinations to make strings
                             .toCollection()
-                            .mapValues(this._arrayUriEncoder, this, giant.ArrayCollection)
+                            .mapValues(this._arrayUriEncoder, this, $data.ArrayCollection)
                             .join(this.FIELD_SEPARATOR_STRING)
                             .getValues();
                     }
@@ -280,7 +280,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                         return this._arrayUriEncoder(row[fieldNames[0]].split(this.RE_WORD_DELIMITER));
                     } else {
                         // calculating all possible signatures for row
-                        return giant.StringCollection.create(row)
+                        return $data.StringCollection.create(row)
                             // reducing row to relevant fields
                             .filterByKeys(fieldNames)
                             // splitting all fields into words
@@ -292,7 +292,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                             .getCombinationsAsHash()
                             // joining combinations to make strings
                             .toCollection()
-                            .mapValues(this._arrayUriEncoder, this, giant.ArrayCollection)
+                            .mapValues(this._arrayUriEncoder, this, $data.ArrayCollection)
                             .join(this.FIELD_SEPARATOR_STRING)
                             .getValues();
                     }

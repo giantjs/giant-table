@@ -2,7 +2,7 @@
 $oop.postpone(giant, 'Table', function () {
     "use strict";
 
-    var base = giant.Collection,
+    var base = $data.Collection,
         self = base.extend();
 
     /**
@@ -18,7 +18,7 @@ $oop.postpone(giant, 'Table', function () {
      * In technical terms, a table is a collection of rows, therefore it extends the Collection API.
      * TODO: Rename to IndexedTable.
      * @class giant.Table
-     * @extends giant.Collection
+     * @extends $data.Collection
      */
     giant.Table = self
         .addMethods(/** @lends giant.Table# */{
@@ -62,7 +62,7 @@ $oop.postpone(giant, 'Table', function () {
              */
             setItems: function (rowIdRowPairs) {
                 var that = this;
-                giant.Collection.create(rowIdRowPairs)
+                $data.Collection.create(rowIdRowPairs)
                     .forEachItem(function (row, rowId) {
                         that.setItem(rowId, row);
                     });
@@ -140,10 +140,10 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Retrieves rows assigned to the specified row IDs, wrapped in a hash.
              * @param {string[]|number[]} rowIds
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             queryByRowIdsAsHash: function (rowIds) {
-                return giant.StringDictionary.create(rowIds)
+                return $data.StringDictionary.create(rowIds)
                     .combineWith(this.toDictionary());
             },
 
@@ -159,7 +159,7 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Fetches table rows that match specified row expression and wraps them in a hash.
              * @param {object} rowExpr Row expression.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             queryByRowAsHash: function (rowExpr) {
                 var index = this.indexCollection.getBestIndexForRow(rowExpr);
@@ -186,7 +186,7 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Fetches table rows that match specified rows or row fractions and wraps them in a hash.
              * @param {object[]} rows Table rows or relevant fields w/ values
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             queryByRowsAsHash: function (rows) {
                 $assertion.isArray(rows, "Invalid rows expression");
@@ -195,7 +195,7 @@ $oop.postpone(giant, 'Table', function () {
 
                 $assertion.assert(!!index, "No index matches row");
 
-                return giant.Collection.create(rows)
+                return $data.Collection.create(rows)
                     // getting a collection of all keys fitting expression
                     .passEachItemTo(index.rowSignature.getKeysForRow, index.rowSignature)
                     // obtaining unique signatures matching rows
@@ -225,7 +225,7 @@ $oop.postpone(giant, 'Table', function () {
              * Fetches table rows at the specified offset on the specified field, and wraps it in a hash.
              * @param {string[]} fieldNames Names of fields in which the offset must be matched.
              * @param {number} offset Position of row inside the table, in the order of the specified field.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             queryByOffsetAsHash: function (fieldNames, offset) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -253,7 +253,7 @@ $oop.postpone(giant, 'Table', function () {
              * @param {string[]} fieldNames Names of fields in which the offset range must be matched.
              * @param {number} startOffset Start of offset range
              * @param {number} endOffset End of offset range
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             queryByOffsetRangeAsHash: function (fieldNames, startOffset, endOffset) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -284,7 +284,7 @@ $oop.postpone(giant, 'Table', function () {
              * @param {string|number} endValue End of value range
              * @param {number} [offset=0] Number of items to skip at the start of the result set.
              * @param {number} [limit=Infinity] Maximum number of items in result set.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             queryByRangeAsHash: function (fieldNames, startValue, endValue, offset, limit) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -316,7 +316,7 @@ $oop.postpone(giant, 'Table', function () {
              * @param {string} prefix Prefix that must be matched.
              * @param {number} [offset=0] Number of items to skip at the start of the result set.
              * @param {number} [limit=Infinity] Maximum number of items in result set.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             queryByPrefixAsHash: function (fieldNames, prefix, offset, limit) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
@@ -368,7 +368,7 @@ $oop.postpone(giant, 'Table', function () {
              * @returns {giant.Table}
              */
             insertRows: function (rows) {
-                giant.Collection.create(rows)
+                $data.Collection.create(rows)
                     .passEachItemTo(this.insertRow, this);
                 return this;
             },
@@ -485,10 +485,10 @@ $oop.postpone(giant, 'Table', function () {
     });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash */{
+    $data.Hash.addMethods(/** @lends $data.Hash */{
         /**
          * Reinterprets hash as table. Hash must contain array buffer.
          * @returns {giant.Table}

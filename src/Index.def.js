@@ -22,7 +22,7 @@ $oop.postpone(giant, 'Index', function () {
         .addPrivateMethods(/** @lends giant.Index# */{
             /**
              * Retrieves unique row IDs for non-unique list of keys (row signatures).
-             * @param {giant.Hash} keysAsHash
+             * @param {$data.Hash} keysAsHash
              * @returns {string[]}
              * @private
              */
@@ -54,15 +54,15 @@ $oop.postpone(giant, 'Index', function () {
                 /**
                  * Holds index key -> row ID associations.
                  * One index key may reference more than one row IDs.
-                 * @type {giant.StringDictionary}
+                 * @type {$data.StringDictionary}
                  */
-                this.rowIdLookup = giant.StringDictionary.create();
+                this.rowIdLookup = $data.StringDictionary.create();
 
                 /**
                  * Holds index keys in ascending order. (With multiplicity)
-                 * @type {giant.OrderedStringList}
+                 * @type {$data.OrderedStringList}
                  */
-                this.sortedKeys = giant.OrderedStringList.create([], orderType);
+                this.sortedKeys = $data.OrderedStringList.create([], orderType);
             },
 
             /**
@@ -142,7 +142,7 @@ $oop.postpone(giant, 'Index', function () {
              * Supposed to be used on unique indexes, where position in the index is unambiguous.
              * @param {number} startOffset
              * @param {number} endOffset
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             getRowIdsBetweenAsHash: function (startOffset, endOffset) {
                 return this.sortedKeys.items.slice(startOffset, endOffset)
@@ -172,7 +172,7 @@ $oop.postpone(giant, 'Index', function () {
                     keys = [keys];
                 }
 
-                return giant.StringDictionary.create(keys)
+                return $data.StringDictionary.create(keys)
                     // selecting row IDs for specified keys
                     .combineWith(this.rowIdLookup)
                     // collapsing unique row IDs
@@ -182,10 +182,10 @@ $oop.postpone(giant, 'Index', function () {
             /**
              * Retrieves a list of row ids associated with the specified keys, wrapped in a hash.
              * @param {string[]|number[]|string|number} keys
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             getRowIdsForKeysAsHash: function (keys) {
-                return giant.Hash.create(this.getRowIdsForKeys(keys));
+                return $data.Hash.create(this.getRowIdsForKeys(keys));
             },
 
             /**
@@ -215,10 +215,10 @@ $oop.postpone(giant, 'Index', function () {
              * @param {string|number} endValue Upper index bound
              * @param {number} [offset=0] Number of index entries to skip at start.
              * @param {number} [limit=Infinity] Maximum number of index entries to fetch.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             getRowIdsForKeyRangeAsHash: function (startValue, endValue, offset, limit) {
-                return giant.Hash.create(this.getRowIdsForKeyRange(startValue, endValue, offset, limit));
+                return $data.Hash.create(this.getRowIdsForKeyRange(startValue, endValue, offset, limit));
             },
 
             /**
@@ -245,10 +245,10 @@ $oop.postpone(giant, 'Index', function () {
              * @param {string} prefix Key prefix to be matched.
              * @param {number} [offset=0] Number of index entries to skip at start.
              * @param {number} [limit=Infinity] Maximum number of index entries to fetch.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             getRowIdsForPrefixAsHash: function (prefix, offset, limit) {
-                return giant.Hash.create(this.getRowIdsForPrefix(prefix, offset, limit));
+                return $data.Hash.create(this.getRowIdsForPrefix(prefix, offset, limit));
             }
         });
 });

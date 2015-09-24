@@ -34,7 +34,7 @@
     }
 
     test("Type conversion", function () {
-        var hash = giant.Hash.create([
+        var hash = $data.Hash.create([
                 {foo: 'bar', hello: 'world'}
             ]),
             table = hash.toTable();
@@ -377,7 +377,7 @@
 
         result = table.queryByOffsetAsHash(['title'], 1);
 
-        ok(result.isA(giant.Hash), "should return Hash instance");
+        ok(result.isA($data.Hash), "should return Hash instance");
         strictEqual(result.getFirstValue(), json[2], "should return table row at specified offset");
     });
 
@@ -389,7 +389,7 @@
             queryByOffsetAsHash: function (fieldName, offset) {
                 equal(fieldName, 'foo', "should pass field name to hash getter");
                 equal(offset, 100, "should pass offset to hash getter");
-                return giant.Hash.create(hashBuffer);
+                return $data.Hash.create(hashBuffer);
             }
         });
 
@@ -404,7 +404,7 @@
 
         result = table.queryByOffsetRangeAsHash(['title'], 1, 3);
 
-        ok(result.isA(giant.Hash), "should return Hash instance");
+        ok(result.isA($data.Hash), "should return Hash instance");
         deepEqual(
             result.items,
             [ json[2], json[1] ],
@@ -420,7 +420,7 @@
                 equal(fieldName, 'foo', "should pass field name to hash getter");
                 equal(startOffset, 1, "should pass start offset to hash getter");
                 equal(endOffset, 100, "should pass end offset to hash getter");
-                return giant.Hash.create(hashBuffer);
+                return $data.Hash.create(hashBuffer);
             }
         });
 
@@ -440,7 +440,7 @@
                 equal(endValue, "Z");
                 equal(offset, 1);
                 equal(limit, 2);
-                return giant.Hash.create();
+                return $data.Hash.create();
             }
         });
 
@@ -505,7 +505,7 @@
                 equal(prefix, "M");
                 equal(offset, 1);
                 equal(limit, 2);
-                return giant.Hash.create();
+                return $data.Hash.create();
             }
         });
 
@@ -626,7 +626,7 @@
 
     test("Updating rows matching row expression", function () {
         var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(giant.DataUtils.shallowCopy(json))
+            table = giant.Table.create($data.DataUtils.shallowCopy(json))
                 .addIndex(['volumes'], SIGNATURE_TYPES.number),
             row = {
                 'order'  : 0,
