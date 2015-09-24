@@ -123,7 +123,7 @@ giant.postpone(giant, 'RowSignature', function () {
              * @ignore
              */
             init: function (fieldNames, signatureType, isCaseInsensitive) {
-                giant
+                $assertion
                     .isArray(fieldNames, "Invalid field names")
                     .assert(!!fieldNames.length, "Empty field name list")
                     .isStringOptional(signatureType, "Invalid signature type")
@@ -134,7 +134,7 @@ giant.postpone(giant, 'RowSignature', function () {
                 // conditional assertions
                 if (signatureType) {
                     // validating signature type
-                    giant.assert(SIGNATURE_TYPES.hasOwnProperty(signatureType), "Invalid signature type");
+                    $assertion.assert(SIGNATURE_TYPES.hasOwnProperty(signatureType), "Invalid signature type");
                 }
 
                 /**
@@ -225,7 +225,7 @@ giant.postpone(giant, 'RowSignature', function () {
                         break;
 
                     default:
-                        giant.assert(false, "Invalid signature type");
+                        $assertion.assert(false, "Invalid signature type");
                         return ''; // will never be reached
                     }
                 } else {

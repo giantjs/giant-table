@@ -256,7 +256,7 @@ giant.postpone(giant, 'Index', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /** @param {giant.Index} expr */
         isIndex: function (expr) {
             return giant.Index.isBaseOf(expr);

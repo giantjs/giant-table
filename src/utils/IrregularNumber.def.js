@@ -97,7 +97,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
              * @ignore
              */
             init: function (radices) {
-                giant.isArray(radices, "Invalid radices");
+                $assertion.isArray(radices, "Invalid radices");
 
                 /**
                  * Radix for each digit
@@ -137,7 +137,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
              * @returns {giant.IrregularNumber}
              */
             setScalar: function (value) {
-                giant.assert(value <= this.maxValue, "Value out of bounds");
+                $assertion.assert(value <= this.maxValue, "Value out of bounds");
 
                 // assigning scalar value
                 this.asScalar = value;
@@ -158,7 +158,7 @@ giant.postpone(giant, 'IrregularNumber', function () {
                     asDigits,
                     i, j;
 
-                giant
+                $assertion
                     .isArray(digits, "Invalid digits")
                     .assert(digits.length <= radices.length, "Too many digits");
 

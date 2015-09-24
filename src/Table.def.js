@@ -27,7 +27,7 @@ giant.postpone(giant, 'Table', function () {
              * @ignore
              */
             init: function (json) {
-                giant.isArrayOptional(json, "Invalid table buffer");
+                $assertion.isArrayOptional(json, "Invalid table buffer");
 
                 base.init.call(this, json || []);
 
@@ -164,7 +164,7 @@ giant.postpone(giant, 'Table', function () {
             queryByRowAsHash: function (rowExpr) {
                 var index = this.indexCollection.getBestIndexForRow(rowExpr);
 
-                giant.assert(!!index, "No index matches row");
+                $assertion.assert(!!index, "No index matches row");
 
                 return index
                     // obtaining matching row IDs
@@ -189,11 +189,11 @@ giant.postpone(giant, 'Table', function () {
              * @returns {giant.Hash}
              */
             queryByRowsAsHash: function (rows) {
-                giant.isArray(rows, "Invalid rows expression");
+                $assertion.isArray(rows, "Invalid rows expression");
 
                 var index = this.indexCollection.getBestIndexForRow(rows[0]);
 
-                giant.assert(!!index, "No index matches row");
+                $assertion.assert(!!index, "No index matches row");
 
                 return giant.Collection.create(rows)
                     // getting a collection of all keys fitting expression
@@ -321,7 +321,7 @@ giant.postpone(giant, 'Table', function () {
             queryByPrefixAsHash: function (fieldNames, prefix, offset, limit) {
                 var index = this.indexCollection.getBestIndexForFields(fieldNames);
 
-                giant.assert(!!index, "No index matches row");
+                $assertion.assert(!!index, "No index matches row");
 
                 return index
                     // obtaining row IDs matching prefix
@@ -382,7 +382,7 @@ giant.postpone(giant, 'Table', function () {
              * @returns {giant.Table}
              */
             updateRowsByRow: function (rowExpr, row, index) {
-                giant
+                $assertion
                     .isObject(rowExpr, "Invalid row expression")
                     .isObject(row, "Invalid row")
                     .isIndexOptional(index, "Invalid index");
@@ -392,7 +392,7 @@ giant.postpone(giant, 'Table', function () {
                 // getting an index for the row
                 index = index || indexCollection.getBestIndexForRow(rowExpr);
 
-                giant.assert(!!index, "No index matches row");
+                $assertion.assert(!!index, "No index matches row");
 
                 var affectedRowIds = index
                     .getRowIdsForKeysAsHash(index.rowSignature.getKeysForRow(rowExpr))
@@ -418,7 +418,7 @@ giant.postpone(giant, 'Table', function () {
              * @returns {giant.Table}
              */
             deleteRowsByRow: function (rowExpr, index) {
-                giant
+                $assertion
                     .isObject(rowExpr, "Invalid row expression")
                     .isIndexOptional(index, "Invalid index");
 
@@ -427,7 +427,7 @@ giant.postpone(giant, 'Table', function () {
                 // getting an index for the row
                 index = index || indexCollection.getBestIndexForRow(rowExpr);
 
-                giant.assert(!!index, "No index matches row");
+                $assertion.assert(!!index, "No index matches row");
 
                 var affectedRowIds = index
                     .getRowIdsForKeysAsHash(index.rowSignature.getKeysForRow(rowExpr))
@@ -502,7 +502,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /** @param {giant.Table} expr */
         isTable: function (expr) {
             return giant.Table.isBaseOf(expr);

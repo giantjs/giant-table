@@ -46,7 +46,7 @@ giant.postpone(giant, 'MultiArray', function () {
              * @ignore
              */
             init: function (items) {
-                giant.isArray(items, "Invalid items");
+                $assertion.isArray(items, "Invalid items");
 
                 base.init.apply(this, arguments);
             },
@@ -56,7 +56,7 @@ giant.postpone(giant, 'MultiArray', function () {
              * @param {number[]} indices Pin-point values for each item to fetch.
              */
             selectCombination: function (indices) {
-                giant
+                $assertion
                     .isArray(indices, "Invalid indices")
                     .assert(this.items.length === indices.length, "Indices length doesn't match list length");
 

@@ -79,7 +79,7 @@ giant.postpone(giant, 'IndexCollection', function () {
              * @returns {giant.IndexCollection}
              */
             setItem: function (index) {
-                giant.isIndex(index, "Invalid index");
+                $assertion.isIndex(index, "Invalid index");
 
                 base.setItem.call(this, this._getIndexSignature(index), index);
 
