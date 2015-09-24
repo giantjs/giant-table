@@ -1,4 +1,4 @@
-/*global giant */
+/*global $table */
 (function () {
     "use strict";
 
@@ -6,7 +6,7 @@
 
     test("Instantiation", function () {
         throws(function () {
-            giant.MultiArray.create('foo');
+            $table.MultiArray.create('foo');
         }, "Invalid items");
 
         var arr = [
@@ -14,7 +14,7 @@
                 [3],
                 [4, 5]
             ],
-            list = giant.MultiArray.create(arr);
+            list = $table.MultiArray.create(arr);
 
         strictEqual(list.items, arr, "Item buffer added");
     });
@@ -27,11 +27,11 @@
             ]),
             multiArray = hash.toMultiArray();
 
-        ok(multiArray.isA(giant.MultiArray), "Hash converted to prob. array");
+        ok(multiArray.isA($table.MultiArray), "Hash converted to prob. array");
     });
 
     test("Item length measurement", function () {
-        var list = giant.MultiArray.create([
+        var list = $table.MultiArray.create([
             [1, 2],
             [3],
             [4, 5]
@@ -41,7 +41,7 @@
     });
 
     test("Selection", function () {
-        var list = giant.MultiArray.create([
+        var list = $table.MultiArray.create([
             [1, 2],
             [3],
             [4, 5]
@@ -51,7 +51,7 @@
     });
 
     test("Combination", function () {
-        var list = giant.MultiArray.create([
+        var list = $table.MultiArray.create([
             [1, 2],
             [3],
             [4, 5]

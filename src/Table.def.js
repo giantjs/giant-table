@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'Table', function () {
+/*global $table */
+$oop.postpone($table, 'Table', function () {
     "use strict";
 
     var base = $data.Collection,
@@ -7,21 +7,21 @@ $oop.postpone(giant, 'Table', function () {
 
     /**
      * Instantiates class.
-     * @name giant.Table.create
+     * @name $table.Table.create
      * @function
      * @param {object[]} [json]
-     * @returns {giant.Table}
+     * @returns {$table.Table}
      */
 
     /**
      * Indexed table. For quick table queries.
      * In technical terms, a table is a collection of rows, therefore it extends the Collection API.
      * TODO: Rename to IndexedTable.
-     * @class giant.Table
+     * @class $table.Table
      * @extends $data.Collection
      */
-    giant.Table = self
-        .addMethods(/** @lends giant.Table# */{
+    $table.Table = self
+        .addMethods(/** @lends $table.Table# */{
             /**
              * @param {object[]} [json]
              * @ignore
@@ -33,16 +33,16 @@ $oop.postpone(giant, 'Table', function () {
 
                 /**
                  * Indexes associated with table
-                 * @type {giant.IndexCollection}
+                 * @type {$table.IndexCollection}
                  */
-                this.indexCollection = giant.IndexCollection.create();
+                this.indexCollection = $table.IndexCollection.create();
             },
 
             /**
              * Sets row at given row ID.
              * @param {string|number} rowId
              * @param {object} row
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             setItem: function (rowId, row) {
                 // updating indexes
@@ -58,7 +58,7 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Sets multiple rows at once.
              * @param {object} rowIdRowPairs
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             setItems: function (rowIdRowPairs) {
                 var that = this;
@@ -72,7 +72,7 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Deletes a row from the given row ID.
              * @param {string|number} rowId
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             deleteItem: function (rowId) {
                 // updating indexes
@@ -86,14 +86,14 @@ $oop.postpone(giant, 'Table', function () {
 
             /**
              * Clones table.
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             clone: function () {
                 // cloning collection
-                var result = /** @type giant.Table */base.clone.call(this);
+                var result = /** @type $table.Table */base.clone.call(this);
 
                 // adding table specific properties
-                this.indexCollection.forEachItem(function (/**giant.Index*/ index) {
+                this.indexCollection.forEachItem(function (/**$table.Index*/ index) {
                     var rowSignature = index.rowSignature;
                     result.addIndex(rowSignature.fieldNames, rowSignature.signatureType);
                 });
@@ -107,10 +107,10 @@ $oop.postpone(giant, 'Table', function () {
              * @param {string} [signatureType] Index type
              * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
              * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             addIndex: function (fieldNames, signatureType, isCaseInsensitive, orderType) {
-                var index = giant.Index.create(fieldNames, signatureType, isCaseInsensitive, orderType);
+                var index = $table.Index.create(fieldNames, signatureType, isCaseInsensitive, orderType);
 
                 // adding index to collection
                 this.indexCollection.setItem(index);
@@ -123,7 +123,7 @@ $oop.postpone(giant, 'Table', function () {
 
             /**
              * Re-indexes table by rebuilding all indexes associated with table.
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             reIndex: function () {
                 var indexCollection = this.indexCollection;
@@ -346,7 +346,7 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Inserts single row into the table, updating all relevant indexes.
              * @param {object} row Table row
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             insertRow: function (row) {
                 // adding row to table
@@ -365,7 +365,7 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Inserts multiple rows into the table. Updates all relevant indexes.
              * @param {object[]} rows Array of table rows.
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             insertRows: function (rows) {
                 $data.Collection.create(rows)
@@ -378,8 +378,8 @@ $oop.postpone(giant, 'Table', function () {
              * the matching row(s) by reference.
              * @param {object} rowExpr Row expression to be matched.
              * @param {object} row Row value after update.
-             * @param {giant.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
-             * @returns {giant.Table}
+             * @param {$table.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
+             * @returns {$table.Table}
              */
             updateRowsByRow: function (rowExpr, row, index) {
                 $assertion
@@ -414,8 +414,8 @@ $oop.postpone(giant, 'Table', function () {
             /**
              * Removes rows from the table that match the specified row.
              * @param {object} rowExpr Row expression to be matched.
-             * @param {giant.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
-             * @returns {giant.Table}
+             * @param {$table.Index} [index] Index to be used for identifying row IDs. (For ambiguous indexes)
+             * @returns {$table.Table}
              */
             deleteRowsByRow: function (rowExpr, index) {
                 $assertion
@@ -444,7 +444,7 @@ $oop.postpone(giant, 'Table', function () {
 
             /**
              * Clears rows and associated indexes.
-             * @returns {giant.Table}
+             * @returns {$table.Table}
              */
             clear: function () {
                 base.clear.call(this);
@@ -457,29 +457,29 @@ $oop.postpone(giant, 'Table', function () {
         });
 
     // aliases
-    giant.Table.addMethods(/** @lends giant.Table# */{
+    $table.Table.addMethods(/** @lends $table.Table# */{
         /**
          * @function
          * @param {string|number} rowId
          * @param {object} row
-         * @returns {giant.Table}
-         * @see giant.Table#setItem
+         * @returns {$table.Table}
+         * @see $table.Table#setItem
          */
         setRow: self.setItem,
 
         /**
          * @function
          * @param {object} rowIdRowPairs
-         * @returns {giant.Table}
-         * @see giant.Table#setItems
+         * @returns {$table.Table}
+         * @see $table.Table#setItems
          */
         setRows: self.setItems,
 
         /**
          * @function
          * @param {string|number} rowId
-         * @returns {giant.Table}
-         * @see giant.Table#deleteItem
+         * @returns {$table.Table}
+         * @see $table.Table#deleteItem
          */
         deleteRow: self.deleteItem
     });
@@ -491,10 +491,10 @@ $oop.amendPostponed($data, 'Hash', function () {
     $data.Hash.addMethods(/** @lends $data.Hash */{
         /**
          * Reinterprets hash as table. Hash must contain array buffer.
-         * @returns {giant.Table}
+         * @returns {$table.Table}
          */
         toTable: function () {
-            return giant.Table.create(this.items);
+            return $table.Table.create(this.items);
         }
     });
 });
@@ -502,16 +502,16 @@ $oop.amendPostponed($data, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
-        /** @param {giant.Table} expr */
+    $assertion.addTypes(/** @lends $table */{
+        /** @param {$table.Table} expr */
         isTable: function (expr) {
-            return giant.Table.isBaseOf(expr);
+            return $table.Table.isBaseOf(expr);
         },
 
-        /** @param {giant.Table} [expr] */
+        /** @param {$table.Table} [expr] */
         isTableOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Table.isBaseOf(expr);
+                   $table.Table.isBaseOf(expr);
         }
     });
 }());

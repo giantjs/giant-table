@@ -1,25 +1,25 @@
-/*global giant */
-$oop.postpone(giant, 'Index', function () {
+/*global $table */
+$oop.postpone($table, 'Index', function () {
     "use strict";
 
     /**
      * Instantiates class.
-     * @name giant.Index.create
+     * @name $table.Index.create
      * @function
      * @param {string[]} fieldNames Field names
      * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
      * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @returns {giant.Index}
+     * @returns {$table.Index}
      */
 
     /**
      * Table index. Keeps track of single of composite fields, enables binary search in tables.
-     * @class giant.Index
+     * @class $table.Index
      * @extends $oop.Base
      */
-    giant.Index = $oop.Base.extend()
-        .addPrivateMethods(/** @lends giant.Index# */{
+    $table.Index = $oop.Base.extend()
+        .addPrivateMethods(/** @lends $table.Index# */{
             /**
              * Retrieves unique row IDs for non-unique list of keys (row signatures).
              * @param {$data.Hash} keysAsHash
@@ -35,7 +35,7 @@ $oop.postpone(giant, 'Index', function () {
                     .getUniqueValues();
             }
         })
-        .addMethods(/** @lends giant.Index# */{
+        .addMethods(/** @lends $table.Index# */{
             /**
              * @param {string[]} fieldNames Field names
              * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
@@ -47,9 +47,9 @@ $oop.postpone(giant, 'Index', function () {
                 /**
                  * Row signature associated with index.
                  * Provides validation and index key generation.
-                 * @type {giant.RowSignature}
+                 * @type {$table.RowSignature}
                  */
-                this.rowSignature = giant.RowSignature.create(fieldNames, signatureType, isCaseInsensitive);
+                this.rowSignature = $table.RowSignature.create(fieldNames, signatureType, isCaseInsensitive);
 
                 /**
                  * Holds index key -> row ID associations.
@@ -69,7 +69,7 @@ $oop.postpone(giant, 'Index', function () {
              * Adds single row to index.
              * @param {object} row Table row
              * @param {string|number} rowId Row ID: original index of row in table
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             addRow: function (row, rowId) {
                 // calculating index keys based on row
@@ -92,7 +92,7 @@ $oop.postpone(giant, 'Index', function () {
              * Removes single row from index.
              * @param {object} row Table row
              * @param {string} rowId Row ID: original index of row in table
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             removeRow: function (row, rowId) {
                 // calculating index keys based on row
@@ -113,7 +113,7 @@ $oop.postpone(giant, 'Index', function () {
 
             /**
              * Clears index buffers.
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             clearBuffers: function () {
                 // clearing lookup buffers
@@ -256,16 +256,16 @@ $oop.postpone(giant, 'Index', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
-        /** @param {giant.Index} expr */
+    $assertion.addTypes(/** @lends $table */{
+        /** @param {$table.Index} expr */
         isIndex: function (expr) {
-            return giant.Index.isBaseOf(expr);
+            return $table.Index.isBaseOf(expr);
         },
 
-        /** @param {giant.Index} [expr] */
+        /** @param {$table.Index} [expr] */
         isIndexOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Index.isBaseOf(expr);
+                   $table.Index.isBaseOf(expr);
         }
     });
 }());

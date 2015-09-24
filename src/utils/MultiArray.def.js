@@ -1,27 +1,27 @@
-/*global giant */
-$oop.postpone(giant, 'MultiArray', function () {
+/*global $table */
+$oop.postpone($table, 'MultiArray', function () {
     "use strict";
 
     var base = $data.Hash;
 
     /**
      * Instantiates class.
-     * @name giant.MultiArray.create
+     * @name $table.MultiArray.create
      * @function
      * @param {Array[]} items Array of arrays
-     * @returns {giant.MultiArray}
+     * @returns {$table.MultiArray}
      */
 
     /**
      * An array that for each of its items holds an even distribution
      * of possible values (represented as arrays).
-     * @class giant.MultiArray
+     * @class $table.MultiArray
      * @extends $data.Hash
      * @example
      * [[1, 2], [3], [4, 5]]
      */
-    giant.MultiArray = base.extend()
-        .addPrivateMethods(/** @lends giant.MultiArray */{
+    $table.MultiArray = base.extend()
+        .addPrivateMethods(/** @lends $table.MultiArray */{
             /**
              * Measures the number of possibilities for each item
              * and returns the counts in an array
@@ -40,7 +40,7 @@ $oop.postpone(giant, 'MultiArray', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends giant.MultiArray# */{
+        .addMethods(/** @lends $table.MultiArray# */{
             /**
              * @param {Array[]} items Array of arrays
              * @ignore
@@ -80,7 +80,7 @@ $oop.postpone(giant, 'MultiArray', function () {
                     itemLengths = this._getItemLengths(),
                     itemPosition;
 
-                for (itemPosition = giant.IrregularNumber.create(itemLengths);
+                for (itemPosition = $table.IrregularNumber.create(itemLengths);
                      itemPosition.asScalar <= itemPosition.maxValue;
                      itemPosition.inc()
                     ) {
@@ -105,10 +105,10 @@ $oop.amendPostponed($data, 'Hash', function () {
 
     $data.Hash.addMethods(/** @lends $data.Hash */{
         /**
-         * @returns {giant.MultiArray}
+         * @returns {$table.MultiArray}
          */
         toMultiArray: function () {
-            return giant.MultiArray.create(this.items);
+            return $table.MultiArray.create(this.items);
         }
     });
 });

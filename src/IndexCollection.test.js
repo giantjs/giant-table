@@ -1,4 +1,4 @@
-/*global giant */
+/*global $table */
 (function () {
     "use strict";
 
@@ -8,39 +8,39 @@
         expect(2);
 
         var myRow = {},
-            index = giant.Index.create(['foo', 'bar']);
+            index = $table.Index.create(['foo', 'bar']);
 
-        giant.RowSignature.addMocks({
+        $table.RowSignature.addMocks({
             containedByRow: function (row) {
                 strictEqual(row, myRow, "Row passed");
                 strictEqual(this, index.rowSignature, "Index matches");
             }
         });
 
-        giant.IndexCollection._isIndexContainedByRow(myRow, index);
+        $table.IndexCollection._isIndexContainedByRow(myRow, index);
 
-        giant.RowSignature.removeMocks();
+        $table.RowSignature.removeMocks();
     });
 
     test("Field count mapper", function () {
-        var index = giant.Index.create(['foo', 'bar']);
+        var index = $table.Index.create(['foo', 'bar']);
 
         equal(
-            giant.IndexCollection._indexFieldCountMapper(index),
+            $table.IndexCollection._indexFieldCountMapper(index),
             index.rowSignature.fieldNames.length,
             "Index signature field count"
         );
     });
 
     test("DESC Numeric comparator", function () {
-        equal(giant.IndexCollection._descNumericComparator(1, 2), 1, "First is lower");
-        equal(giant.IndexCollection._descNumericComparator(3, 2), -1, "First is higher");
-        equal(giant.IndexCollection._descNumericComparator(3, 3), 0, "Equal");
+        equal($table.IndexCollection._descNumericComparator(1, 2), 1, "First is lower");
+        equal($table.IndexCollection._descNumericComparator(3, 2), -1, "First is higher");
+        equal($table.IndexCollection._descNumericComparator(3, 3), 0, "Equal");
     });
 
     test("Index addition", function () {
-        var index = giant.Index.create(['foo', 'bar']),
-            indexCollection = giant.IndexCollection.create();
+        var index = $table.Index.create(['foo', 'bar']),
+            indexCollection = $table.IndexCollection.create();
 
         indexCollection.setItem(index);
 
@@ -54,9 +54,9 @@
     });
 
     test("Exact index lookup by field names", function () {
-        var index1 = giant.Index.create(['foo', 'bar']),
-            index2 = giant.Index.create(['field1', 'field2']),
-            indexCollection = giant.IndexCollection.create();
+        var index1 = $table.Index.create(['foo', 'bar']),
+            index2 = $table.Index.create(['field1', 'field2']),
+            indexCollection = $table.IndexCollection.create();
 
         indexCollection
             .setItem(index1)
@@ -72,17 +72,17 @@
     });
 
     test("Fetching indexes matching a row", function () {
-        var indexCollection = giant.IndexCollection.create()
-                .setItem(giant.Index.create(['foo', 'bar']))
-                .setItem(giant.Index.create(['foo']))
-                .setItem(giant.Index.create(['foo', 'baz']))
-                .setItem(giant.Index.create(['foo', 'moo'])),
+        var indexCollection = $table.IndexCollection.create()
+                .setItem($table.Index.create(['foo', 'bar']))
+                .setItem($table.Index.create(['foo']))
+                .setItem($table.Index.create(['foo', 'baz']))
+                .setItem($table.Index.create(['foo', 'moo'])),
             result;
 
         // full match (ie. all index fields are present in row)
         result = indexCollection.getIndexesForRow({foo: 'hello', bar: 'world'});
 
-        ok(result.isA(giant.IndexCollection), "Return type IndexCollection");
+        ok(result.isA($table.IndexCollection), "Return type IndexCollection");
         deepEqual(
             result.getKeys().sort(),
             ['foo%string%ascending', 'foo|bar%string%ascending'],
@@ -91,17 +91,17 @@
     });
 
     test("Fetching index for row", function () {
-        var indexCollection = giant.IndexCollection.create()
-                .setItem(giant.Index.create(['foo', 'bar']))
-                .setItem(giant.Index.create(['foo']))
-                .setItem(giant.Index.create(['foo', 'baz']))
-                .setItem(giant.Index.create(['foo', 'moo'])),
+        var indexCollection = $table.IndexCollection.create()
+                .setItem($table.Index.create(['foo', 'bar']))
+                .setItem($table.Index.create(['foo']))
+                .setItem($table.Index.create(['foo', 'baz']))
+                .setItem($table.Index.create(['foo', 'moo'])),
             result;
 
         // could yield any of the first 3 indexes
         result = indexCollection.getIndexForRow({foo: 'hello', bar: 'world', baz: '!!!'});
 
-        ok(result.isA(giant.Index), "Return type Index");
+        ok(result.isA($table.Index), "Return type Index");
         ok(
             result.rowSignature.fieldSignature === 'foo|bar%string' ||
             result.rowSignature.fieldSignature === 'foo%string' ||
@@ -111,10 +111,10 @@
     });
 
     test("Fetching best index for row", function () {
-        var indexCollection = giant.IndexCollection.create()
-                .setItem(giant.Index.create(['foo', 'bar']))
-                .setItem(giant.Index.create(['foo']))
-                .setItem(giant.Index.create(['foo', 'bar', 'baz'])),
+        var indexCollection = $table.IndexCollection.create()
+                .setItem($table.Index.create(['foo', 'bar']))
+                .setItem($table.Index.create(['foo']))
+                .setItem($table.Index.create(['foo', 'bar', 'baz'])),
             result;
 
         result = indexCollection.getBestIndexForRow({hello: 'world'});
@@ -124,7 +124,7 @@
         // yields the one with the most matching fields
         result = indexCollection.getBestIndexForRow({foo: 'hello', bar: 'world', baz: '!!!'});
 
-        ok(result.isA(giant.Index), "Return type");
+        ok(result.isA($table.Index), "Return type");
         equal(result.rowSignature.fieldSignature, 'foo|bar|baz%string', "Result index signature");
 
         result = indexCollection.getBestIndexForRow({foo: 'hello', bar: 'world'});
@@ -134,7 +134,7 @@
     test("Fetching best index for multiple fields", function () {
         expect(2);
 
-        var indexCollection = giant.IndexCollection.create(),
+        var indexCollection = $table.IndexCollection.create(),
             bestIndex = {};
 
         indexCollection.addMocks({
@@ -151,9 +151,9 @@
     });
 
     test("Row addition", function () {
-        var index1 = giant.Index.create(['foo', 'bar']),
-            index2 = giant.Index.create(['foo', 'moo']),
-            indexCollection = giant.IndexCollection.create()
+        var index1 = $table.Index.create(['foo', 'bar']),
+            index2 = $table.Index.create(['foo', 'moo']),
+            indexCollection = $table.IndexCollection.create()
                 .setItem(index1)
                 .setItem(index2);
 

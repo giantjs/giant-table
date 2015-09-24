@@ -1,26 +1,26 @@
-/*global giant */
-$oop.postpone(giant, 'RowSignature', function () {
+/*global $table */
+$oop.postpone($table, 'RowSignature', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty;
 
     /**
      * Instantiates class.
-     * @name giant.RowSignature.create
+     * @name $table.RowSignature.create
      * @function
      * @param {string[]} fieldNames Field names
      * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
      * @param {boolean} [isCaseInsensitive=false] Whether signature is case insensitive.
-     * @returns {giant.RowSignature}
+     * @returns {$table.RowSignature}
      */
 
     /**
      * Row signature. Typed primitive representation of a table row, with validation and generation.
-     * @class giant.RowSignature
+     * @class $table.RowSignature
      * @extends $oop.Base
      */
-    giant.RowSignature = $oop.Base.extend()
-        .addConstants(/** @lends giant.RowSignature */{
+    $table.RowSignature = $oop.Base.extend()
+        .addConstants(/** @lends $table.RowSignature */{
             /**
              * Field separator, must be escapable w/ encodeURI
              * @type {string}
@@ -62,7 +62,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                 string  : 'string'
             }
         })
-        .addPrivateMethods(/** @lends giant.RowSignature# */{
+        .addPrivateMethods(/** @lends $table.RowSignature# */{
             /**
              * Creates an array of specified length & filled with
              * the specified value at each position.
@@ -70,7 +70,7 @@ $oop.postpone(giant, 'RowSignature', function () {
              * @param {*} value
              * @returns {Array}
              * @private
-             * @memberOf giant.RowSignature
+             * @memberOf $table.RowSignature
              */
             _createUniformArray: function (length, value) {
                 var result = new Array(length),
@@ -115,7 +115,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends giant.RowSignature# */{
+        .addMethods(/** @lends $table.RowSignature# */{
             /**
              * @param {string[]} fieldNames Field names
              * @param {string} [signatureType='string'] Signature type, see SIGNATURE_TYPES.
@@ -202,7 +202,7 @@ $oop.postpone(giant, 'RowSignature', function () {
                                 .filterByKeys(fieldNames)
                                 .getValues();
 
-                            return giant.IrregularNumber.create(radices)
+                            return $table.IrregularNumber.create(radices)
                                 .setDigits(digits)
                                 .asScalar;
                         }

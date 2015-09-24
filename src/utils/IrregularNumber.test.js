@@ -1,4 +1,4 @@
-/*global giant */
+/*global $table */
 (function () {
     "use strict";
 
@@ -6,35 +6,35 @@
 
     test("Instantiation", function () {
         throws(function () {
-            giant.IrregularNumber.create('foo');
+            $table.IrregularNumber.create('foo');
         }, "Invalid radices");
 
-        var num = giant.IrregularNumber.create([3, 3, 4]);
+        var num = $table.IrregularNumber.create([3, 3, 4]);
 
         deepEqual(num.radices, [3, 3, 4], "Radices");
         equal(num.asScalar, 0, "Initial value");
     });
 
     test("Max value detection", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]);
+        var num = $table.IrregularNumber.create([3, 3, 4]);
 
         equal(num._getMaxValue(), 35, "Max value irregular number may take");
     });
 
     test("Radix products", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]);
+        var num = $table.IrregularNumber.create([3, 3, 4]);
 
         deepEqual(num._getRadixProducts(), [12, 4]);
     });
 
     test("Digital decomposition", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]);
+        var num = $table.IrregularNumber.create([3, 3, 4]);
 
         deepEqual(num._convertToDigits(19), [1, 1, 3], "Number 19");
     });
 
     test("Normalizing", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]);
+        var num = $table.IrregularNumber.create([3, 3, 4]);
 
         equal(num._convertToScalar([1, 1, 3]), 19, "Number 19");
         equal(num._convertToScalar([1, 3]), 7, "Number 7");
@@ -42,7 +42,7 @@
     });
 
     test("Value assignment", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]),
+        var num = $table.IrregularNumber.create([3, 3, 4]),
             result;
 
         result = num.setScalar(15);
@@ -53,7 +53,7 @@
     });
 
     test("Digit assignment", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]),
+        var num = $table.IrregularNumber.create([3, 3, 4]),
             result;
 
         result = num.setDigits([1, 1, 3]);
@@ -68,7 +68,7 @@
     });
 
     test("Incrementing", function () {
-        var num = giant.IrregularNumber.create([3, 3, 4]);
+        var num = $table.IrregularNumber.create([3, 3, 4]);
 
         num
             .setScalar(5)// [0, 1, 1]

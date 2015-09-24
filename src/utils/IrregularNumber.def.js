@@ -1,23 +1,23 @@
-/*global giant */
-$oop.postpone(giant, 'IrregularNumber', function () {
+/*global $table */
+$oop.postpone($table, 'IrregularNumber', function () {
     "use strict";
 
     /**
      * Instantiates class.
-     * @name giant.IrregularNumber.create
+     * @name $table.IrregularNumber.create
      * @function
      * @param {number[]} radices
-     * @returns {giant.IrregularNumber}
+     * @returns {$table.IrregularNumber}
      */
 
     /**
      * Irregular Number. Number represented in an irregular number system, where each digit
      * might have a different radix.
-     * @class giant.IrregularNumber
+     * @class $table.IrregularNumber
      * @extends $oop.Base
      */
-    giant.IrregularNumber = $oop.Base.extend()
-        .addPrivateMethods(/** @lends giant.IrregularNumber */{
+    $table.IrregularNumber = $oop.Base.extend()
+        .addPrivateMethods(/** @lends $table.IrregularNumber */{
             /**
              * Calculates the maximum value possible in this number system
              * @returns {Number}
@@ -91,7 +91,7 @@ $oop.postpone(giant, 'IrregularNumber', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends giant.IrregularNumber# */{
+        .addMethods(/** @lends $table.IrregularNumber# */{
             /**
              * @param {number[]} radices Array of custom radices for each item.
              * @ignore
@@ -134,7 +134,7 @@ $oop.postpone(giant, 'IrregularNumber', function () {
             /**
              * Sets scalar value on irregular number
              * @param {number} value
-             * @returns {giant.IrregularNumber}
+             * @returns {$table.IrregularNumber}
              */
             setScalar: function (value) {
                 $assertion.assert(value <= this.maxValue, "Value out of bounds");
@@ -151,7 +151,7 @@ $oop.postpone(giant, 'IrregularNumber', function () {
             /**
              * Sets irregular number digits
              * @param {number[]} digits
-             * @returns {giant.IrregularNumber}
+             * @returns {$table.IrregularNumber}
              */
             setDigits: function (digits) {
                 var radices = this.radices,
@@ -176,7 +176,7 @@ $oop.postpone(giant, 'IrregularNumber', function () {
 
             /**
              * Increments current value
-             * @returns {giant.IrregularNumber}
+             * @returns {$table.IrregularNumber}
              */
             inc: function () {
                 var digits = this.asDigits,

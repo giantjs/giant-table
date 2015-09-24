@@ -1,13 +1,13 @@
-/*global giant */
+/*global $table */
 (function () {
     "use strict";
 
     module("Index");
 
     test("Instantiation", function () {
-        var index = giant.Index.create(['foo', 'bar'], 'number', false, 'descending');
+        var index = $table.Index.create(['foo', 'bar'], 'number', false, 'descending');
 
-        ok(index.rowSignature.isA(giant.RowSignature), "should add rowSignature property");
+        ok(index.rowSignature.isA($table.RowSignature), "should add rowSignature property");
         deepEqual(index.rowSignature.fieldNames, ['foo', 'bar'], "should set field names on row signature");
         equal(index.rowSignature.signatureType, 'number', "should set signature type on row signature");
         equal(index.rowSignature.isCaseInsensitive, false, "should set case sensitivity flag on row signature");
@@ -17,7 +17,7 @@
     });
 
     test("Row addition", function () {
-        var index = giant.Index.create(['foo', 'bar']);
+        var index = $table.Index.create(['foo', 'bar']);
 
         index.addRow({foo: 5, bar: 7}, 0);
 
@@ -31,7 +31,7 @@
     });
 
     test("Index population", function () {
-        var index = giant.Index.create(['foo', 'bar'])
+        var index = $table.Index.create(['foo', 'bar'])
             .addRow({foo: 5, bar: 7}, 0)
             .addRow({foo: 3, bar: 2}, 1)
             .addRow({foo: 4, bar: 1}, 2)
@@ -76,7 +76,7 @@
     });
 
     test("Row removal", function () {
-        var index = giant.Index.create(['foo', 'bar'])
+        var index = $table.Index.create(['foo', 'bar'])
             .addRow({foo: 5, bar: 7}, 0)
             .addRow({foo: 3, bar: 2}, 1);
 
@@ -92,7 +92,7 @@
     });
 
     test("Failed row removal", function () {
-        var index = giant.Index.create(['foo', 'bar'])
+        var index = $table.Index.create(['foo', 'bar'])
             .addRow({foo: 5, bar: 7}, 0)
             .addRow({foo: 3, bar: 2}, 1);
 
@@ -112,7 +112,7 @@
     test("Clearing", function () {
         expect(2);
 
-        var index = giant.Index.create(['foo'], 'number')
+        var index = $table.Index.create(['foo'], 'number')
             .addRow({foo: 5}, 0)
             .addRow({foo: 3}, 1)
             .addRow({foo: 4}, 2)
@@ -140,7 +140,7 @@
     });
 
     test('Lookup', function () {
-        var index = giant.Index.create(['foo'], 'number')
+        var index = $table.Index.create(['foo'], 'number')
             .addRow({foo: 5}, 0)
             .addRow({foo: 3}, 1)
             .addRow({foo: 4}, 2)
@@ -166,7 +166,7 @@
     });
 
     test('Case sensitive lookup', function () {
-        var index = giant.Index.create(['foo'], 'string')
+        var index = $table.Index.create(['foo'], 'string')
             .addRow({foo: "e"}, 0)
             .addRow({foo: "C"}, 1)
             .addRow({foo: "D"}, 2)
@@ -186,7 +186,7 @@
     });
 
     test('Case insensitive lookup', function () {
-        var index = giant.Index.create(['foo'], 'string', true)
+        var index = $table.Index.create(['foo'], 'string', true)
             .addRow({foo: "e"}, 0)
             .addRow({foo: "C"}, 1)
             .addRow({foo: "D"}, 2)
@@ -206,7 +206,7 @@
     });
 
     test("Unique row IDs", function () {
-        var index = giant.Index.create(['foo'], 'number')
+        var index = $table.Index.create(['foo'], 'number')
                 .addRow({foo: 5}, 0)
                 .addRow({foo: 3}, 1)
                 .addRow({foo: 4}, 2)
@@ -232,7 +232,7 @@
     });
 
     test("Case sensitive unique row IDs", function () {
-        var index = giant.Index.create(['foo'], 'string')
+        var index = $table.Index.create(['foo'], 'string')
                 .addRow({foo: "e"}, 0)
                 .addRow({foo: "C"}, 1)
                 .addRow({foo: "D"}, 2)
@@ -258,7 +258,7 @@
     });
 
     test("Case insensitive unique row IDs", function () {
-        var index = giant.Index.create(['foo'], 'string', true)
+        var index = $table.Index.create(['foo'], 'string', true)
                 .addRow({foo: "e"}, 0)
                 .addRow({foo: "C"}, 1)
                 .addRow({foo: "D"}, 2)
@@ -286,7 +286,7 @@
     test("Row ID retrieval by position", function () {
         expect(5);
 
-        var index = giant.Index.create(['foo'], 'number')
+        var index = $table.Index.create(['foo'], 'number')
                 .addRow({foo: 5}, 1)
                 .addRow({foo: 3}, 2)
                 .addRow({foo: 2}, 3)
@@ -314,7 +314,7 @@
     test("Row ID retrieval between positions", function () {
         expect(5);
 
-        var index = giant.Index.create(['foo'], 'number')
+        var index = $table.Index.create(['foo'], 'number')
                 .addRow({foo: 5}, 1)
                 .addRow({foo: 3}, 2)
                 .addRow({foo: 2}, 3)
@@ -347,7 +347,7 @@
     test("Hash-less row ID retrieval between positions", function () {
         expect(3);
 
-        var index = giant.Index.create(['foo'], 'number'),
+        var index = $table.Index.create(['foo'], 'number'),
             hashBuffer = {},
             hash = $data.Hash.create(hashBuffer);
 
@@ -368,7 +368,7 @@
     test("Row ID retrieval by range", function () {
         expect(6);
 
-        var index = giant.Index.create(['foo'], 'number'),
+        var index = $table.Index.create(['foo'], 'number'),
             foo = $data.Hash.create({}),
             result = [];
 
@@ -395,7 +395,7 @@
     test("Row ID retrieval by range (case insensitive)", function () {
         expect(4);
 
-        var index = giant.Index.create(['foo'], 'string', true),
+        var index = $table.Index.create(['foo'], 'string', true),
             foo = $data.Hash.create({}),
             result = [];
 
@@ -420,7 +420,7 @@
     test("Row ID retrieval by prefix", function () {
         expect(6);
 
-        var index = giant.Index.create(['foo'], 'number'),
+        var index = $table.Index.create(['foo'], 'number'),
             foo = $data.Hash.create({}),
             result = [];
 
@@ -447,7 +447,7 @@
     test("Row ID retrieval by prefix (case insensitive)", function () {
         expect(3);
 
-        var index = giant.Index.create(['foo'], 'string', true),
+        var index = $table.Index.create(['foo'], 'string', true),
             foo = $data.Hash.create({}),
             result = [];
 

@@ -1,30 +1,30 @@
-/*global giant */
-$oop.postpone(giant, 'IndexCollection', function () {
+/*global $table */
+$oop.postpone($table, 'IndexCollection', function () {
     "use strict";
 
     var base = $data.Collection;
 
     /**
      * Instantiates class.
-     * @name giant.IndexCollection.create
+     * @name $table.IndexCollection.create
      * @function
      * @param {object|Array} [items] Initial contents.
-     * @returns {giant.IndexCollection}
+     * @returns {$table.IndexCollection}
      */
 
     /**
      * Collection of indexes. Selects index(es) contained by the collection that fit data row(s).
-     * @class giant.IndexCollection
+     * @class $table.IndexCollection
      * @extends $data.Collection
-     * @extends giant.Index
+     * @extends $table.Index
      */
-    giant.IndexCollection = $data.Collection.of(giant.Index).extend()
-        .addPrivateMethods(/** @lends giant.IndexCollection */{
+    $table.IndexCollection = $data.Collection.of($table.Index).extend()
+        .addPrivateMethods(/** @lends $table.IndexCollection */{
             /**
              * Determines whether all fields of the specified index
              * are present in the specified row.
              * @param {object} row Table row
-             * @param {giant.Index} index
+             * @param {$table.Index} index
              * @returns {Boolean}
              * @private
              */
@@ -34,7 +34,7 @@ $oop.postpone(giant, 'IndexCollection', function () {
 
             /**
              * Returns the field count for the specified index.
-             * @param {giant.Index} index
+             * @param {$table.Index} index
              * @returns {Number}
              * @private
              */
@@ -54,7 +54,7 @@ $oop.postpone(giant, 'IndexCollection', function () {
             },
 
             /**
-             * @param {giant.Index} index
+             * @param {$table.Index} index
              * @private
              */
             _getIndexSignature: function (index) {
@@ -62,7 +62,7 @@ $oop.postpone(giant, 'IndexCollection', function () {
             },
 
             /**
-             * @param {giant.RowSignature} rowSignature
+             * @param {$table.RowSignature} rowSignature
              * @param {string} orderType
              * @returns {string}
              * @private
@@ -71,12 +71,12 @@ $oop.postpone(giant, 'IndexCollection', function () {
                 return rowSignature.fieldSignature + '%' + (orderType || $data.OrderedList.orderTypes.ascending);
             }
         })
-        .addMethods(/** @lends giant.IndexCollection# */{
+        .addMethods(/** @lends $table.IndexCollection# */{
             /**
              * Sets an index in the collection.
              * Item key is calculated based index signature.
-             * @param {giant.Index} index
-             * @returns {giant.IndexCollection}
+             * @param {$table.Index} index
+             * @returns {$table.IndexCollection}
              */
             setItem: function (index) {
                 $assertion.isIndex(index, "Invalid index");
@@ -89,17 +89,17 @@ $oop.postpone(giant, 'IndexCollection', function () {
             /**
              * Retrieves a collection of indexes that fully match the specified row.
              * @param {object} row
-             * @returns {giant.IndexCollection}
+             * @returns {$table.IndexCollection}
              */
             getIndexesForRow: function (row) {
-                return /** @type {giant.IndexCollection} */ this
+                return /** @type {$table.IndexCollection} */ this
                     .filterBySelector(this._isIndexContainedByRow.bind(this, row));
             },
 
             /**
              * Retrieves the first index matching the specified row.
              * @param {object} row
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             getIndexForRow: function (row) {
                 return this
@@ -112,7 +112,7 @@ $oop.postpone(giant, 'IndexCollection', function () {
             /**
              * Retrieves the index best matching the specified row
              * @param {object} row
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             getBestIndexForRow: function (row) {
                 return this
@@ -127,7 +127,7 @@ $oop.postpone(giant, 'IndexCollection', function () {
             /**
              * Retrieves the index best matching the specified field names.
              * @param {string[]} fieldNames
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             getBestIndexForFields: function (fieldNames) {
                 var rowExpr = fieldNames.toStringDictionary().reverse();
@@ -139,10 +139,10 @@ $oop.postpone(giant, 'IndexCollection', function () {
              * @param {string[]} fieldNames
              * @param {string} [signatureType]
              * @param {string} [orderType]
-             * @returns {giant.Index}
+             * @returns {$table.Index}
              */
             getIndexForFields: function (fieldNames, signatureType, orderType) {
-                var rowSignature = giant.RowSignature.create(fieldNames, signatureType);
+                var rowSignature = $table.RowSignature.create(fieldNames, signatureType);
                 return this.getItem(this._getIndexSignatureFromRowSignature(rowSignature, orderType));
             }
         });

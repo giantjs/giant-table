@@ -1,4 +1,4 @@
-/*global giant */
+/*global $table */
 (function () {
     "use strict";
 
@@ -39,15 +39,15 @@
             ]),
             table = hash.toTable();
 
-        ok(table.isA(giant.Table), "Hash converted to table");
+        ok(table.isA($table.Table), "Hash converted to table");
     });
 
     test("Instantiation", function () {
         throws(function () {
-            giant.Table.create({foo: 'bar'});
+            $table.Table.create({foo: 'bar'});
         }, "Invalid buffer");
 
-        var table = giant.Table.create([
+        var table = $table.Table.create([
             {foo: 'bar', hello: 'world'}
         ]);
 
@@ -59,12 +59,12 @@
             "Table rows"
         );
 
-        ok(table.indexCollection.isA(giant.IndexCollection), "Index collection");
+        ok(table.indexCollection.isA($table.IndexCollection), "Index collection");
         equal(table.indexCollection.getKeyCount(), 0, "No indexes initially");
     });
 
     test("Item setting", function () {
-        var table = giant.Table.create()
+        var table = $table.Table.create()
             .addIndex(['foo'])
             .setItem('0', {foo: "hello"});
 
@@ -83,7 +83,7 @@
     });
 
     test("Setting multiple items", function () {
-        var table = giant.Table.create()
+        var table = $table.Table.create()
             .addIndex(['foo'])
             .setItem('0', {foo: "hello"});
 
@@ -109,7 +109,7 @@
     });
 
     test("Item deletion", function () {
-        var table = giant.Table.create(
+        var table = $table.Table.create(
                 [
                     {foo: "hello"},
                     {foo: "world"}
@@ -133,7 +133,7 @@
     });
 
     test("Cloning", function () {
-        var table = giant.Table.create(
+        var table = $table.Table.create(
                     [
                         {foo: "hello"},
                         {foo: "world"}
@@ -168,7 +168,7 @@
     });
 
     test("Table merge", function () {
-        var table = giant.Table.create(
+        var table = $table.Table.create(
                     [
                         {foo: "hello"},
                         {foo: "world"}
@@ -176,7 +176,7 @@
                 .addIndex(['foo']),
             result;
 
-        result = /** @type giant.Table */ table.mergeWith(giant.Table.create([
+        result = /** @type $table.Table */ table.mergeWith($table.Table.create([
             undefined,
             {foo: "howdy"},
             {foo: "yall"}
@@ -212,7 +212,7 @@
     });
 
     test("Index addition", function () {
-        var table = giant.Table.create([
+        var table = $table.Table.create([
             {foo: 'hello', bar: 'world'}
         ]);
 
@@ -224,7 +224,7 @@
 
         var index = table.indexCollection.getIndexForFields(['foo', 'bar'], 'string', 'descending');
 
-        ok(index.isA(giant.Index), "Index instance");
+        ok(index.isA($table.Index), "Index instance");
         equal(index.rowSignature.isCaseInsensitive, false, "Case sensitive by default");
         deepEqual(
             index.rowIdLookup.items,
@@ -241,7 +241,7 @@
     });
 
     test("Re-indexing", function () {
-        var table = giant.Table.create([
+        var table = $table.Table.create([
             {foo: 'hello', bar: 'world'}
         ]);
 
@@ -288,7 +288,7 @@
     });
 
     test("Querying by row IDs", function () {
-        var table = giant.Table.create(json);
+        var table = $table.Table.create(json);
 
         deepEqual(table.queryByRowIds([2]), [json[2]], "Single row match");
         deepEqual(table.queryByRowIds([0, 2]), [json[0], json[2]], "Multiple row match");
@@ -297,8 +297,8 @@
     });
 
     test("Query by single row", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string)
                 .addIndex(['volumes'], SIGNATURE_TYPES.number);
@@ -333,8 +333,8 @@
     });
 
     test("Query by multiple rows", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string)
                 .addIndex(['volumes'], SIGNATURE_TYPES.number);
@@ -370,8 +370,8 @@
     });
 
     test("Querying by offset", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.string),
             result;
 
@@ -382,7 +382,7 @@
     });
 
     test("Hash-less querying by offset", function () {
-        var table = giant.Table.create(json),
+        var table = $table.Table.create(json),
             hashBuffer = {};
 
         table.addMocks({
@@ -397,8 +397,8 @@
     });
 
     test("Querying by offset range", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.string),
             result;
 
@@ -412,7 +412,7 @@
     });
 
     test("Hash-less querying by offset range", function () {
-        var table = giant.Table.create(json),
+        var table = $table.Table.create(json),
             hashBuffer = {};
 
         table.addMocks({
@@ -430,11 +430,11 @@
     test("Query by range (call stack)", function () {
         expect(4);
 
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
-        giant.Index.addMocks({
+        $table.Index.addMocks({
             getRowIdsForKeyRangeAsHash: function (startValue, endValue, offset, limit) {
                 equal(startValue, "M");
                 equal(endValue, "Z");
@@ -446,12 +446,12 @@
 
         table.queryByRangeAsHash(['author'], "M", "Z", 1, 2);
 
-        giant.Index.removeMocks();
+        $table.Index.removeMocks();
     });
 
     test("Query by range", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
@@ -472,8 +472,8 @@
     });
 
     test("Query by range (case insensitive)", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText, true)
                 .addIndex(['author'], SIGNATURE_TYPES.string, true);
 
@@ -496,11 +496,11 @@
     test("Query by prefix (call stack)", function () {
         expect(3);
 
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
-        giant.Index.addMocks({
+        $table.Index.addMocks({
             getRowIdsForPrefixAsHash: function (prefix, offset, limit) {
                 equal(prefix, "M");
                 equal(offset, 1);
@@ -511,12 +511,12 @@
 
         table.queryByPrefixAsHash(['author'], "M", 1, 2);
 
-        giant.Index.removeMocks();
+        $table.Index.removeMocks();
     });
 
     test("Query by prefix", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText)
                 .addIndex(['author'], SIGNATURE_TYPES.string);
 
@@ -540,8 +540,8 @@
     });
 
     test("Query by prefix (case insensitive)", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create(json)
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create(json)
                 .addIndex(['title'], SIGNATURE_TYPES.fullText, true)
                 .addIndex(['author'], SIGNATURE_TYPES.string, true);
 
@@ -565,7 +565,7 @@
     });
 
     test("Insertion", function () {
-        var table = giant.Table.create(),
+        var table = $table.Table.create(),
             result;
 
         table
@@ -605,7 +605,7 @@
     });
 
     test("Multiple insertion", function () {
-        var table = giant.Table.create(),
+        var table = $table.Table.create(),
             result = [];
 
         table.addMocks({
@@ -625,8 +625,8 @@
     });
 
     test("Updating rows matching row expression", function () {
-        var SIGNATURE_TYPES = giant.RowSignature.SIGNATURE_TYPES,
-            table = giant.Table.create($data.DataUtils.shallowCopy(json))
+        var SIGNATURE_TYPES = $table.RowSignature.SIGNATURE_TYPES,
+            table = $table.Table.create($data.DataUtils.shallowCopy(json))
                 .addIndex(['volumes'], SIGNATURE_TYPES.number),
             row = {
                 'order'  : 0,
@@ -650,7 +650,7 @@
             table.updateRowsByRow({volumes: 1}, row, 'foo');
         }, "should raise exception on invalid index argument");
 
-        giant.Index.addMocks({
+        $table.Index.addMocks({
             removeRow: function (row, rowId) {
                 rowsRemoved.push([row, rowId]);
                 return this;
@@ -664,7 +664,7 @@
 
         strictEqual(table.updateRowsByRow({volumes: 1}, row), table, "should be chainable");
 
-        giant.Index.removeMocks();
+        $table.Index.removeMocks();
 
         deepEqual(table.items, [json[0], row, row],
             "should update all matching rows");
@@ -683,7 +683,7 @@
     test("Deleting rows matching row expression", function () {
         expect(12);
 
-        var table = giant.Table.create([
+        var table = $table.Table.create([
                     {foo: "hello", bar: "world", baz: "!!!"},
                     {foo: "howdy", bar: "yall", baz: "!"},
                     {foo: "greetings", bar: "everyone", baz: "."}
@@ -706,7 +706,7 @@
             table.deleteRowsByRow({hello: "world"});
         }, "should raise exception when no index fits specified row");
 
-        giant.Index.addMocks({
+        $table.Index.addMocks({
             removeRow: function (row, rowId) {
                 // will be called 3x (for each index)
                 affectedSignatures.push(this.rowSignature.getKeysForRow(row));
@@ -718,7 +718,7 @@
         strictEqual(table.deleteRowsByRow(rowExpression), table,
             "should be chainable");
 
-        giant.Index.removeMocks();
+        $table.Index.removeMocks();
 
         deepEqual(
             table.items,
@@ -740,7 +740,7 @@
     test("Clearing table", function () {
         expect(2);
 
-        var table = giant.Table.create([
+        var table = $table.Table.create([
             {foo: 'bar', hello: 'world'}
         ]);
 
