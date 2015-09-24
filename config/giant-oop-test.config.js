@@ -1,2 +1,2 @@
 /*global giant */
-giant.testing = true;
+$oop.testing = true;

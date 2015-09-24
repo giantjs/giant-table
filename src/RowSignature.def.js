@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'RowSignature', function () {
+$oop.postpone(giant, 'RowSignature', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty;
@@ -17,9 +17,9 @@ giant.postpone(giant, 'RowSignature', function () {
     /**
      * Row signature. Typed primitive representation of a table row, with validation and generation.
      * @class giant.RowSignature
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.RowSignature = giant.Base.extend()
+    giant.RowSignature = $oop.Base.extend()
         .addConstants(/** @lends giant.RowSignature */{
             /**
              * Field separator, must be escapable w/ encodeURI

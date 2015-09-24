@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'IndexCollection', function () {
+$oop.postpone(giant, 'IndexCollection', function () {
     "use strict";
 
     var base = giant.Collection;

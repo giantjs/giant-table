@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'IrregularNumber', function () {
+$oop.postpone(giant, 'IrregularNumber', function () {
     "use strict";
 
     /**
@@ -14,9 +14,9 @@ giant.postpone(giant, 'IrregularNumber', function () {
      * Irregular Number. Number represented in an irregular number system, where each digit
      * might have a different radix.
      * @class giant.IrregularNumber
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.IrregularNumber = giant.Base.extend()
+    giant.IrregularNumber = $oop.Base.extend()
         .addPrivateMethods(/** @lends giant.IrregularNumber */{
             /**
              * Calculates the maximum value possible in this number system

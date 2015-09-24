@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'MultiArray', function () {
+$oop.postpone(giant, 'MultiArray', function () {
     "use strict";
 
     var base = giant.Hash;
@@ -100,7 +100,7 @@ giant.postpone(giant, 'MultiArray', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash */{

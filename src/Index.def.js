@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Index', function () {
+$oop.postpone(giant, 'Index', function () {
     "use strict";
 
     /**
@@ -16,9 +16,9 @@ giant.postpone(giant, 'Index', function () {
     /**
      * Table index. Keeps track of single of composite fields, enables binary search in tables.
      * @class giant.Index
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.Index = giant.Base.extend()
+    giant.Index = $oop.Base.extend()
         .addPrivateMethods(/** @lends giant.Index# */{
             /**
              * Retrieves unique row IDs for non-unique list of keys (row signatures).

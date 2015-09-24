@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Table', function () {
+$oop.postpone(giant, 'Table', function () {
     "use strict";
 
     var base = giant.Collection,
@@ -485,7 +485,7 @@ giant.postpone(giant, 'Table', function () {
     });
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash */{
