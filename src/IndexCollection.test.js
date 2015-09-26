@@ -1,4 +1,3 @@
-/*global $table */
 (function () {
     "use strict";
 

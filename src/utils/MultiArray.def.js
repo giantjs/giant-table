@@ -1,4 +1,3 @@
-/*global $table */
 $oop.postpone($table, 'MultiArray', function () {
     "use strict";
 

@@ -1,4 +1,3 @@
-/*global $table */
 $oop.postpone($table, 'RowSignature', function () {
     "use strict";
 
