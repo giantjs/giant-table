@@ -3,13 +3,14 @@ module.exports = function (grunt) {
     "use strict";
 
     var $asset = require('giant-asset'),
+        $gruntTools = require('giant-grunt-tools'),
         packageNode = require('./package.json'),
         manifestNode = require('./manifest.json'),
         manifest = $asset.Manifest.create(manifestNode),
         multiTasks = [].toMultiTaskCollection(),
         gruntTasks = [].toGruntTaskCollection();
 
-    $asset.GruntProxy.create()
+    $gruntTools.GruntProxy.create()
         .setGruntObject(grunt);
 
     'concat'
