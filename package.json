@@ -32,8 +32,10 @@
     "grunt-contrib-concat": "^0.5.1",
     "grunt-karma": "^0.12.1",
     "karma": "^0.13.9",
-    "karma-chrome-launcher": "^0.2.0",
+    "karma-phantomjs-launcher": "^0.2.1",
     "karma-qunit": "^0.1.5",
+    "phantomjs": "^1.9.18",
+    "phantomjs-function-bind-polyfill": "git://github.com/dandean/phantomjs-function-bind-polyfill.git",
     "qunitjs": "^1.19.0"
   },
   "files": [
