@@ -23,8 +23,7 @@
     "giant-assertion": "0.2.0",
     "giant-data": "0.2.0",
     "giant-oop": "0.2.0",
-    "giant-utils": "0.2.0",
-    "q": "^1.4.1"
+    "giant-utils": "0.2.0"
   },
   "devDependencies": {
     "giant-asset": "0.2.0",
