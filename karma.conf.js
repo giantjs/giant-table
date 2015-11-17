@@ -16,7 +16,6 @@ module.exports = function (config) {
             'node_modules/giant-assertion/lib/giant-assertion.js',
             'node_modules/giant-oop/lib/giant-oop.js',
             'config/giant-oop-test.config.js',
-            'node_modules/q/q.js',
             'node_modules/giant-utils/lib/giant-utils.js',
             'node_modules/giant-data/lib/giant-data.js',
 
