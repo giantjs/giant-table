@@ -1,6 +1,6 @@
 {
   "name": "giant-table",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Indexed table module for Giant",
   "keywords": [
     "table",
